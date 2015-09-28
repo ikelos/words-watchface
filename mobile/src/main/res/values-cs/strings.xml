@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="background_color">Barva pozadí</string>
+	<string name="accent_color">Accent color</string>
+	<string name="text_color">Text color</string>
+	<string name="shadow_text_color">Shadow text color</string>
+</resources>

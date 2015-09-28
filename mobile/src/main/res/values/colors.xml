@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#607D8B</color>
+    <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#FF4081</color>
+	<color name="background_color">#CFD8DC</color>
 
     <color name="preference_pressed">#55CCCCCC</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="text_grey">#8E9AA6</color>
+	<color name="layout_border">#1a1a1a</color>
+	<color name="shadow">#D1000000</color>
+	<color name="belt_color">#1d1d1d</color>
+	<color name="watch_frame">#383838</color>
 </resources>

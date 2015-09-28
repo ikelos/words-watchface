@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fitsSystemWindows="true"
+	tools:context=".MainActivity">
+
+	<android.support.design.widget.AppBarLayout
+		android:id="@+id/appbar_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:theme="@style/AppTheme.AppBarOverlay">
+
+		<android.support.v7.widget.Toolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			android:background="?attr/colorPrimary"
+			app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+	</android.support.design.widget.AppBarLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="@color/background_color"
+		android:layout_marginTop="?attr/actionBarSize"
+		android:orientation="horizontal">
+
+		<SurfaceView
+			android:id="@+id/watch_surface"
+			xmlns:android="http://schemas.android.com/apk/res/android"
+			android:layout_width="250dp"
+			android:layout_height="match_parent"
+			android:layout_gravity="center"/>
+
+		<View
+			android:layout_width="1dp"
+			android:layout_height="match_parent"
+			android:background="@color/layout_border"/>
+
+		<ScrollView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<TextView
+					style="@style/SettingsHeader"
+					android:layout_marginTop="34dp"
+					android:text="@string/background_color"/>
+
+				<android.support.v7.widget.RecyclerView
+					android:id="@+id/background_recycler_view"
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/color_line_height"
+					android:visibility="visible"/>
+
+				<TextView
+					style="@style/SettingsHeader"
+					android:layout_marginTop="34dp"
+					android:text="@string/text_color"/>
+
+				<android.support.v7.widget.RecyclerView
+					android:id="@+id/text_recycler_view"
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/color_line_height"
+					android:visibility="visible"/>
+
+				<TextView
+					style="@style/SettingsHeader"
+					android:layout_marginTop="34dp"
+					android:text="@string/accent_color"/>
+
+				<android.support.v7.widget.RecyclerView
+					android:id="@+id/accent_recycler_view"
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/color_line_height"
+					android:visibility="visible"/>
+
+				<TextView
+					style="@style/SettingsHeader"
+					android:layout_marginTop="@dimen/margin_header_top"
+					android:text="@string/shadow_text_color"/>
+
+				<android.support.v7.widget.RecyclerView
+					android:id="@+id/shadow_recycler_view"
+					android:layout_width="match_parent"
+					android:layout_height="@dimen/color_line_height"
+					android:visibility="visible"/>
+
+			</LinearLayout>
+		</ScrollView>
+	</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

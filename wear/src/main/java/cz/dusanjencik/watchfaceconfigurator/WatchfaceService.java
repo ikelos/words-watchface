@@ -43,14 +43,15 @@ import com.google.android.gms.wearable.DataItemBuffer;
 import com.google.android.gms.wearable.Wearable;
 
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
-import cz.dusanjencik.watchfaceconfigurator.lang.LangFactory;
-import cz.dusanjencik.watchfaceconfigurator.model.TextRow;
-import cz.dusanjencik.watchfaceconfigurator.watches.WordsWatchFace;
+import cz.dusanjencik.watchfaceconfigurator.core.data.DataLayer;
+import cz.dusanjencik.watchfaceconfigurator.core.events.OnShouldRedraw;
+import cz.dusanjencik.watchfaceconfigurator.core.events.OnUpdateSettings;
+import cz.dusanjencik.watchfaceconfigurator.core.watches.WordsWatchFace;
+import de.greenrobot.event.EventBus;
 
 /**
  * @author Dušan Jenčík dusanjencik@gmail.com
@@ -74,8 +75,7 @@ public class WatchfaceService extends CanvasWatchFaceService {
 		return new Engine();
 	}
 
-	private class Engine extends CanvasWatchFaceService.Engine implements
-			GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+	private class Engine extends CanvasWatchFaceService.Engine {
 		final Handler mUpdateTimeHandler = new EngineHandler(this);
 
 		final BroadcastReceiver mTimeZoneReceiver = new BroadcastReceiver() {
@@ -86,7 +86,6 @@ public class WatchfaceService extends CanvasWatchFaceService {
 			}
 		};
 
-		private GoogleApiClient googleApiClient;
 		boolean mRegisteredTimeZoneReceiver = false;
 
 		boolean mAmbient;
@@ -97,6 +96,8 @@ public class WatchfaceService extends CanvasWatchFaceService {
 		float   mXOffset;
 		float   mYOffset;
 		int     mChinSize;
+
+		DataLayer mDataLayer;
 
 		WordsWatchFace mWatchFace;
 
@@ -119,13 +120,8 @@ public class WatchfaceService extends CanvasWatchFaceService {
 			Resources resources = WatchfaceService.this.getResources();
 			mYOffset = resources.getDimension(R.dimen.digital_y_offset);
 
-
 			mTime = new GregorianCalendar();
-			googleApiClient = new GoogleApiClient.Builder(WatchfaceService.this)
-					.addApi(Wearable.API)
-					.addConnectionCallbacks(this)
-					.addOnConnectionFailedListener(this)
-					.build();
+			mDataLayer = new DataLayer(WatchfaceService.this);
 
 			mWatchFace = new WordsWatchFace(WatchfaceService.this, mTime, getPeekCardPosition().top != 0);
 			mWatchFace.setIsShownPeekCard(getPeekCardPosition().top != 0);
@@ -144,7 +140,7 @@ public class WatchfaceService extends CanvasWatchFaceService {
 
 			if (visible) {
 				registerReceiver();
-				googleApiClient.connect();
+				mDataLayer.connect();
 				// Update time zone in case it changed while we weren't visible.
 				mTime.clear(Calendar.ZONE_OFFSET);
 				mTime.setTimeInMillis(System.currentTimeMillis());
@@ -159,26 +155,16 @@ public class WatchfaceService extends CanvasWatchFaceService {
 		}
 
 		private void releaseGoogleApiClient() {
-			if (googleApiClient != null && googleApiClient.isConnected()) {
-				Wearable.DataApi.removeListener(googleApiClient, onDataChangedListener);
-				googleApiClient.disconnect();
-			}
+			mDataLayer.disconnect();
 		}
 
-		private final DataApi.DataListener onDataChangedListener = new DataApi.DataListener() {
-			@Override
-			public void onDataChanged(DataEventBuffer dataEvents) {
-				for (DataEvent event : dataEvents) {
-					if (event.getType() == DataEvent.TYPE_CHANGED) {
-						DataItem item = event.getDataItem();
-						mWatchFace.processConfigurationFor(item);
-					}
-				}
+		public void onEvent(OnUpdateSettings event) {
+			mWatchFace.processConfigurationFor(event.dataItem);
+		}
 
-				dataEvents.release();
-				invalidateIfNecessary();
-			}
-		};
+		public void onEvent(OnShouldRedraw event) {
+			invalidateIfNecessary();
+		}
 
 		private void invalidateIfNecessary() {
 			if (isVisible() && !isInAmbientMode()) {
@@ -191,6 +177,7 @@ public class WatchfaceService extends CanvasWatchFaceService {
 				return;
 			}
 			mRegisteredTimeZoneReceiver = true;
+			EventBus.getDefault().register(this);
 			IntentFilter filter = new IntentFilter(Intent.ACTION_TIMEZONE_CHANGED);
 			WatchfaceService.this.registerReceiver(mTimeZoneReceiver, filter);
 		}
@@ -199,6 +186,7 @@ public class WatchfaceService extends CanvasWatchFaceService {
 			if (!mRegisteredTimeZoneReceiver) {
 				return;
 			}
+			EventBus.getDefault().unregister(this);
 			mRegisteredTimeZoneReceiver = false;
 			WatchfaceService.this.unregisterReceiver(mTimeZoneReceiver);
 		}
@@ -285,37 +273,6 @@ public class WatchfaceService extends CanvasWatchFaceService {
 						- (timeMs % INTERACTIVE_UPDATE_RATE_MS);
 				mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
 			}
-		}
-
-		@Override
-		public void onConnected(Bundle bundle) {
-
-			Log.d(TAG, "connected GoogleAPI");
-
-			Wearable.DataApi.addListener(googleApiClient, onDataChangedListener);
-			Wearable.DataApi.getDataItems(googleApiClient).setResultCallback(onConnectedResultCallback);
-		}
-
-		private final ResultCallback<DataItemBuffer> onConnectedResultCallback = new ResultCallback<DataItemBuffer>() {
-			@Override
-			public void onResult(DataItemBuffer dataItems) {
-				for (DataItem item : dataItems) {
-					mWatchFace.processConfigurationFor(item);
-				}
-
-				dataItems.release();
-				invalidateIfNecessary();
-			}
-		};
-
-		@Override
-		public void onConnectionSuspended(int i) {
-			Log.e(TAG, "suspended GoogleAPI");
-		}
-
-		@Override
-		public void onConnectionFailed(ConnectionResult connectionResult) {
-			Log.e(TAG, "connectionFailed GoogleAPI");
 		}
 	}
 

@@ -3,4 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 	<dimen name="fab_margin">16dp</dimen>
+    <dimen name="color_line_height">56dp</dimen>
+    <dimen name="watch_face_size">200dp</dimen>
+	<dimen name="color_view_size">48dp</dimen>
+	<dimen name="margin_header_top">16dp</dimen>
 </resources>
