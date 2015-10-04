@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cz.dusanjencik.watchfaceconfigurator.R;
 import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
-import cz.dusanjencik.watchfaceconfigurator.core.utils.PrefUtils;
 import cz.dusanjencik.watchfaceconfigurator.events.OnColorClickEvent;
 import cz.dusanjencik.watchfaceconfigurator.models.ColorItem;
 import de.greenrobot.event.EventBus;
@@ -25,22 +25,22 @@ import de.greenrobot.event.EventBus;
 public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorViewHolder> {
 	public static final String TAG = ColorAdapter.class.getSimpleName();
 
-	private                          ColorItem[]    mItems;
-	private                          LayoutInflater mLayoutInflater;
-	private                          Context        mContext;
-	@Configuration.ColorType private int            mColorType;
-	private                          int            mSelectedItem;
+	private                             ColorItem[]    mItems;
+	private                             LayoutInflater mLayoutInflater;
+	private                             Context        mContext;
+	@Configuration.SettingsType private int            mSettingsType;
+	private                             int            mSelectedPosition;
 
-	public ColorAdapter(Context context, @ArrayRes int arrayRes, @Configuration.ColorType int type, int selectedColor) {
+	public ColorAdapter(Context context, @ArrayRes int arrayRes, @Configuration.SettingsType int type, int selectedColor) {
 		this.mContext = context;
 		this.mLayoutInflater = LayoutInflater.from(mContext);
-		this.mColorType = type;
+		this.mSettingsType = type;
 		int[] colors = mContext.getResources().getIntArray(arrayRes);
 		this.mItems = new ColorItem[colors.length];
 		for (int i = 0, count = colors.length; i < count; i++) {
 			mItems[i] = new ColorItem(colors[i]);
 			if (colors[i] == selectedColor)
-				mSelectedItem = i;
+				mSelectedPosition = i;
 		}
 	}
 
@@ -54,6 +54,12 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorViewHol
 	public void onBindViewHolder(ColorViewHolder holder, int position) {
 		ColorItem colorItem = mItems[position];
 		holder.button.setSupportBackgroundTintList(new ColorStateList(new int[][] {new int[0]}, new int[] {colorItem.color}));
+		holder.selected_view.setBackgroundColor(colorItem.color);
+
+		if (position == mSelectedPosition)
+			holder.selected_view.setVisibility(View.VISIBLE);
+		else
+			holder.selected_view.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -61,42 +67,22 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ColorViewHol
 		return mItems.length;
 	}
 
-	public void setSelected(int color) {
-		if (color != PrefUtils.NONE_COLOR) {
-			for (int i = 0, count = mItems.length; i < count; i++) {
-				if (mItems[i].color == color) {
-					mSelectedItem = i;
-					return;
-				}
-			}
-		}
-		switch (mColorType) {
-			case Configuration.BACKGROUND_COLOR:
-				mSelectedItem = 0;
-				break;
-			case Configuration.TEXT_COLOR:
-				mSelectedItem = 1;
-				break;
-			case Configuration.ACCENT_COLOR:
-				mSelectedItem = 3;
-				break;
-			case Configuration.SHADOW_COLOR:
-				mSelectedItem = 12;
-		}
-	}
-
-	public class ColorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-		@Bind (R.id.button) public AppCompatButton button;
+	public class ColorViewHolder extends RecyclerView.ViewHolder {
+		@Bind (R.id.button) public        AppCompatButton button;
+		@Bind (R.id.selected_view) public View            selected_view;
 
 		public ColorViewHolder(View v) {
 			super(v);
 			ButterKnife.bind(this, v);
-			button.setOnClickListener(this);
 		}
 
-		@Override
+		@OnClick (R.id.button)
 		public void onClick(View v) {
-			EventBus.getDefault().post(new OnColorClickEvent(mItems[getLayoutPosition()], mColorType));
+			int lastSelected = mSelectedPosition;
+			mSelectedPosition = getLayoutPosition();
+			notifyItemChanged(lastSelected);
+			notifyItemChanged(mSelectedPosition);
+			EventBus.getDefault().post(new OnColorClickEvent(mItems[mSelectedPosition], mSettingsType));
 		}
 	}
 }

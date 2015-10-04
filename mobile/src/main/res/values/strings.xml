@@ -4,4 +4,10 @@
 	<string name="accent_color">Accent color</string>
 	<string name="text_color">Text color</string>
 	<string name="shadow_text_color">Shadow text color</string>
+	<string name="language">Language</string>
+	<string name="lang_czech">Czech</string>
+	<string name="lang_english">English</string>
+	<string name="snackbar_ambient">"Ambient mode is "</string>
+	<string name="ambient_on">on</string>
+	<string name="ambient_off">off</string>
 </resources>

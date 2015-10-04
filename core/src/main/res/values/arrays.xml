@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<array name="color_set">
+	<array name="color_set_accent_and_text">
 		<item>@color/color11</item>
 		<item>@color/color0</item>
 		<item>@color/color1</item>
@@ -14,5 +14,22 @@
 		<item>@color/color9</item>
 		<item>@color/color10</item>
 		<item>@color/color12</item>
+	</array>
+
+	<array name="color_set_background">
+		<item>@color/color11</item>
+		<item>@color/color0</item>
+		<item>@color/color9</item>
+		<item>@color/color10</item>
+		<item>@color/color12</item>
+		<item>@color/color13</item>
+	</array>
+
+	<array name="color_set_shadow_text">
+		<item>@color/color12</item>
+		<item>@color/color11</item>
+		<item>@color/color0</item>
+		<item>@color/color13</item>
+		<item>@color/color14</item>
 	</array>
 </resources>

@@ -9,7 +9,7 @@ public class AccentString {
 	public final boolean isAccent;
 
 	public AccentString(String text, boolean isAccent) {
-		this.text = text;
+		this.text = text.toUpperCase();
 		this.isAccent = isAccent;
 	}
 }

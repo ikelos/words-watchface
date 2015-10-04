@@ -25,21 +25,27 @@ import cz.dusanjencik.watchfaceconfigurator.core.utils.PrefUtils;
  * @created 26.09.15.
  */
 public class WordsWatchFace extends ABaseWatchface {
-	public static final  String   TAG             = WordsWatchFace.class.getSimpleName();
-	private static final Typeface NORMAL_TYPEFACE =
+	public static final  String   TAG                 = WordsWatchFace.class.getSimpleName();
+	private static final Typeface NORMAL_TYPEFACE     =
 			Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
+	public static final  int      NEW_GENERATION_TIME = 60; // in sec
 
 	private Paint mBackgroundPaint;
 	private Paint mTextPaint, mTextShadowPaint, mTextAccentPaint;
-	private float          mTextSize;
-	private int[]          mNumOfChars;
+	private float mTextSize;
+	private final int[] mNumOfChars = new int[] {
+			9, 11, 12, 13, 14, 14, 14, 14, 13, 12, 10
+	};
 	private TextRow[]      mTextRows;
 	private AccentString[] mActualText;
 	private boolean mShowFromTop = true;
 	private Random mRandom;
-	private long    mLastUpdate       = 0L;
-	private boolean isInitializedSize = false;
+	private long    mLastUpdate        = 0L;
+	private boolean mIsInitializedSize = false;
+	@Configuration.LangType
+	private int mLang;
 
+	@SuppressWarnings ("ResourceType")
 	public WordsWatchFace(Context context, Calendar calendar, boolean isPeekCardShown) {
 		super(context, calendar);
 		mTextSize = 22f;
@@ -50,18 +56,20 @@ public class WordsWatchFace extends ABaseWatchface {
 		mTextPaint = createTextPaint(PrefUtils.getTextColor());
 		mTextShadowPaint = createTextPaint(PrefUtils.getShadowColor());
 		mTextAccentPaint = createTextPaint(PrefUtils.getAccentColor());
-
-		mNumOfChars = new int[] {
-				9, 11, 12, 13, 14, 14, 14, 14, 13, 12, 10
-		};
+		mLang = PrefUtils.getLang();
 
 		mRandom = new Random(System.currentTimeMillis());
 		mShowFromTop = isPeekCardShown;
 		generateNewDistribution();
 	}
 
+	@Configuration.LangType
+	public int getLang() {
+		return mLang;
+	}
+
 	public boolean isInitializedSize() {
-		return isInitializedSize;
+		return mIsInitializedSize;
 	}
 
 	public void setIsShownPeekCard(boolean shown) {
@@ -98,6 +106,7 @@ public class WordsWatchFace extends ABaseWatchface {
 		return paint;
 	}
 
+	@SuppressWarnings ("ResourceType")
 	public void processConfigurationFor(DataItem item) {
 		if (Configuration.PATH.equals(item.getUri().getPath())) {
 			DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
@@ -112,6 +121,10 @@ public class WordsWatchFace extends ABaseWatchface {
 			}
 			if (dataMap.containsKey(Configuration.KEY_SHADOW_COLOR)) {
 				updateShadowColorTo(dataMap.getInt(Configuration.KEY_SHADOW_COLOR, Configuration.DETAULT_SHADOW_COLOR));
+			}
+			if (dataMap.containsKey(Configuration.KEY_LANG)) {
+				updateLang(dataMap.getInt(Configuration.KEY_LANG, Configuration.DEFAULT_LANG));
+				generateDistributionInNextDraw();
 			}
 		}
 	}
@@ -132,16 +145,20 @@ public class WordsWatchFace extends ABaseWatchface {
 		mTextShadowPaint.setColor(color);
 	}
 
+	public void updateLang(@Configuration.LangType int lang) {
+		mLang = lang;
+	}
+
 	@Override
 	public void onDraw(Canvas canvas, Rect bounds) {
 		generateNewDistribution();
 
-		if (!isInitializedSize) {
+		if (!mIsInitializedSize) {
 			mTextSize = bounds.width() / 14.54f;
 			mTextPaint.setTextSize(mTextSize);
 			mTextShadowPaint.setTextSize(mTextSize);
 			mTextAccentPaint.setTextSize(mTextSize);
-			isInitializedSize = true;
+			mIsInitializedSize = true;
 		}
 
 		// Draw the background.
@@ -178,14 +195,13 @@ public class WordsWatchFace extends ABaseWatchface {
 	}
 
 	private boolean generateNewDistribution() {
-		if ((mTime.getTimeInMillis() - mLastUpdate) / 1000L < 60) {
-//				Log.e("TIME", (mTime.getTimeInMillis()-mLastUpdate)/1000L + " s");
+		if ((mTime.getTimeInMillis() - mLastUpdate) / 1000L < NEW_GENERATION_TIME) {
 			return false;
 		}
 		mLastUpdate = mTime.getTimeInMillis();
 		mTextRows = new TextRow[mNumOfChars.length];
 
-		mActualText = LangFactory.parseDate(mTime, mContext.getResources());
+		mActualText = LangFactory.parseDate(mTime, mContext.getResources(), mLang);
 
 		boolean[] shouldShow = new boolean[mNumOfChars.length];
 		Arrays.fill(shouldShow, 0, mActualText.length, true);

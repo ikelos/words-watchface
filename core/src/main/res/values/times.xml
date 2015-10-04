@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="is">
-		<item>je</item>
-		<item>jsou</item>
-	</string-array>
-	<string-array name="numbers">
+	<!-- czech -->
+	<string name="cs_is1">je</string>
+	<string name="cs_is2">jsou</string>
+	<string-array name="cs_numbers">
 		<item>jedna</item>
 		<item>dvě</item>
 		<item>tři</item>
@@ -18,7 +17,7 @@
 		<item>jedenáct</item>
 		<item>dvanáct</item>
 	</string-array>
-	<string-array name="ordinalNumbers">
+	<string-array name="cs_ordinalNumbers">
 		<item>jedné</item>
 		<item>druhé</item>
 		<item>třetí</item>
@@ -32,16 +31,57 @@
 		<item>jedenácté</item>
 		<item>dvanácté</item>
 	</string-array>
-	<string-array name="hours">
+	<string-array name="cs_hours">
 		<item>hodina</item>
 		<item>hodiny</item>
 		<item>hodin</item>
 	</string-array>
-	<string name="minute">minut</string>
-	<string name="after">po</string>
-	<string name="to1">za</string>
-	<string name="to2">na</string>
-	<string name="quoter1">čtvrt</string>
-	<string name="quoter2">třičtvrtě</string>
-	<string name="half">půl</string>
+	<string name="cs_minute">minut</string>
+	<string name="cs_after">po</string>
+	<string name="cs_to1">za</string>
+	<string name="cs_to2">na</string>
+	<string name="cs_quarter1">čtvrt</string>
+	<string name="cs_quarter2">třičtvrtě</string>
+	<string name="cs_half">půl</string>
+
+	<!-- english -->
+	<string name="en_it">it</string>
+	<string name="en_is">is</string>
+	<string-array name="en_numbers">
+		<item>one</item>
+		<item>two</item>
+		<item>three</item>
+		<item>four</item>
+		<item>five</item>
+		<item>six</item>
+		<item>seven</item>
+		<item>eight</item>
+		<item>nine</item>
+		<item>ten</item>
+		<item>eleven</item>
+		<item>twelve</item>
+	</string-array>
+	<string-array name="en_ordinalNumbers">
+		<item>first</item>
+		<item>second</item>
+		<item>third</item>
+		<item>fourth</item>
+		<item>fifth</item>
+		<item>sixth</item>
+		<item>seventh</item>
+		<item>eighth</item>
+		<item>ninth</item>
+		<item>tenth</item>
+		<item>eleventh</item>
+		<item>twelfth</item>
+	</string-array>
+	<string-array name="en_hours">
+		<item>oclock</item>
+		<item>oclock</item>
+		<item>oclock</item>
+	</string-array>
+	<string name="en_past">past</string>
+	<string name="en_quarter">quarter</string>
+	<string name="en_to">to</string>
+	<string name="en_half">half</string>
 </resources>

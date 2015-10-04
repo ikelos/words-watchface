@@ -3,11 +3,9 @@ package cz.dusanjencik.watchfaceconfigurator.core.utils;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 
 import java.lang.ref.WeakReference;
 
-import cz.dusanjencik.core.R;
 import cz.dusanjencik.watchfaceconfigurator.core.App;
 import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
 
@@ -100,5 +98,13 @@ public class PrefUtils {
 	public static int getShadowColor() {
 		return getPrefs().getInt(Configuration.KEY_SHADOW_COLOR,
 				Configuration.DETAULT_SHADOW_COLOR);
+	}
+
+	public static void setLang(@Configuration.LangType int lang) {
+		saveImmediatelySync(Configuration.KEY_LANG, lang);
+	}
+
+	public static int getLang() {
+		return getPrefs().getInt(Configuration.KEY_LANG, Configuration.DEFAULT_LANG);
 	}
 }

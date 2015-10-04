@@ -30,10 +30,8 @@ public class DataLayer implements GoogleApiClient.ConnectionCallbacks,
 	public static final String TAG = DataLayer.class.getSimpleName();
 
 	private GoogleApiClient mGoogleApiClient;
-	private Context         mContext;
 
 	public DataLayer(Context context) {
-		mContext = context;
 		mGoogleApiClient = new GoogleApiClient.Builder(context)
 				.addConnectionCallbacks(this)
 				.addOnConnectionFailedListener(this)
@@ -69,29 +67,33 @@ public class DataLayer implements GoogleApiClient.ConnectionCallbacks,
 
 	}
 
-	public void postToWearable(@Configuration.ColorType int tag, int color) {
+	public void postToWearable(@Configuration.SettingsType int tag, int data) {
 		PutDataMapRequest putDataMapReq = PutDataMapRequest.create(Configuration.PATH);
 
 		switch (tag) {
 			case Configuration.BACKGROUND_COLOR: {
-				PrefUtils.setBackgroundColor(color);
-				putDataMapReq.getDataMap().putInt(Configuration.KEY_BACKGROUND_COLOR, color);
+				PrefUtils.setBackgroundColor(data);
+				putDataMapReq.getDataMap().putInt(Configuration.KEY_BACKGROUND_COLOR, data);
 				break;
 			}
 			case Configuration.TEXT_COLOR: {
-				PrefUtils.setTextColor(color);
-				putDataMapReq.getDataMap().putInt(Configuration.KEY_TEXT_COLOR, color);
+				PrefUtils.setTextColor(data);
+				putDataMapReq.getDataMap().putInt(Configuration.KEY_TEXT_COLOR, data);
 				break;
 			}
 			case Configuration.ACCENT_COLOR: {
-				PrefUtils.setAccentColor(color);
-				putDataMapReq.getDataMap().putInt(Configuration.KEY_ACCENT_COLOR, color);
+				PrefUtils.setAccentColor(data);
+				putDataMapReq.getDataMap().putInt(Configuration.KEY_ACCENT_COLOR, data);
 				break;
 			}
 			case Configuration.SHADOW_COLOR: {
-				PrefUtils.setShadowColor(color);
-				putDataMapReq.getDataMap().putInt(Configuration.KEY_SHADOW_COLOR, color);
+				PrefUtils.setShadowColor(data);
+				putDataMapReq.getDataMap().putInt(Configuration.KEY_SHADOW_COLOR, data);
 				break;
+			}
+			case Configuration.LANG: {
+				PrefUtils.setLang(data);
+				putDataMapReq.getDataMap().putInt(Configuration.KEY_LANG, data);
 			}
 		}
 		PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+			  android:layout_width="match_parent"
+			  android:layout_height="match_parent"
+			  android:orientation="vertical">
+
+	<TextView
+		style="@style/SettingsHeader"
+		android:layout_marginTop="@dimen/margin_header_top"
+		android:text="@string/language"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/color_line_height"
+		android:gravity="center"
+		android:orientation="horizontal">
+
+		<Button
+			android:id="@+id/btnLangCS"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/color_view_size"
+			android:padding="4dp"
+			android:text="@string/lang_czech"/>
+
+		<Button
+			android:id="@+id/btnLangEN"
+			android:layout_width="wrap_content"
+			android:layout_height="@dimen/color_view_size"
+			android:padding="4dp"
+			android:text="@string/lang_english"/>
+
+	</LinearLayout>
+
+	<TextView
+		style="@style/SettingsHeader"
+		android:layout_marginTop="@dimen/margin_header_top"
+		android:text="@string/background_color"/>
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/background_recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/color_line_height"
+		android:visibility="visible"/>
+
+	<TextView
+		style="@style/SettingsHeader"
+		android:layout_marginTop="@dimen/margin_header_top"
+		android:text="@string/text_color"/>
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/text_recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/color_line_height"
+		android:visibility="visible"/>
+
+	<TextView
+		style="@style/SettingsHeader"
+		android:layout_marginTop="@dimen/margin_header_top"
+		android:text="@string/accent_color"/>
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/accent_recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/color_line_height"
+		android:visibility="visible"/>
+
+	<TextView
+		style="@style/SettingsHeader"
+		android:layout_marginTop="@dimen/margin_header_top"
+		android:text="@string/shadow_text_color"/>
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/shadow_recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/color_line_height"
+		android:visibility="visible"/>
+
+</LinearLayout>

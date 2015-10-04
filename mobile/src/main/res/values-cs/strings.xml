@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="background_color">Barva pozadí</string>
-	<string name="accent_color">Accent color</string>
-	<string name="text_color">Text color</string>
-	<string name="shadow_text_color">Shadow text color</string>
+	<string name="accent_color">Barva zvýraznění</string>
+	<string name="text_color">Barva textu</string>
+	<string name="shadow_text_color">Barva ostatních písmen</string>
+	<string name="language">Jazyk</string>
+	<string name="lang_czech">Česky</string>
+	<string name="lang_english">Anglicky</string>
+	<string name="snackbar_ambient">"Ambient mode je "</string>
+	<string name="ambient_on">zapnutý</string>
+	<string name="ambient_off">vypnutý</string>
 </resources>
