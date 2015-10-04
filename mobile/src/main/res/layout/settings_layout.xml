@@ -9,27 +9,11 @@
 		android:layout_marginTop="@dimen/margin_header_top"
 		android:text="@string/language"/>
 
-	<LinearLayout
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/lang_recycler_view"
 		android:layout_width="match_parent"
 		android:layout_height="@dimen/color_line_height"
-		android:gravity="center"
-		android:orientation="horizontal">
-
-		<Button
-			android:id="@+id/btnLangCS"
-			android:layout_width="wrap_content"
-			android:layout_height="@dimen/color_view_size"
-			android:padding="4dp"
-			android:text="@string/lang_czech"/>
-
-		<Button
-			android:id="@+id/btnLangEN"
-			android:layout_width="wrap_content"
-			android:layout_height="@dimen/color_view_size"
-			android:padding="4dp"
-			android:text="@string/lang_english"/>
-
-	</LinearLayout>
+		android:visibility="visible"/>
 
 	<TextView
 		style="@style/SettingsHeader"

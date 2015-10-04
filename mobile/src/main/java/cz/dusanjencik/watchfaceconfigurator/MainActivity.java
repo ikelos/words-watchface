@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Debug;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.design.widget.Snackbar;
@@ -15,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,16 +22,16 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.widget.Button;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.OnTouch;
+import cz.dusanjencik.watchfaceconfigurator.adapters.ABaseAdapter;
 import cz.dusanjencik.watchfaceconfigurator.adapters.ColorAdapter;
+import cz.dusanjencik.watchfaceconfigurator.adapters.LangAdapter;
 import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
 import cz.dusanjencik.watchfaceconfigurator.core.data.DataLayer;
 import cz.dusanjencik.watchfaceconfigurator.core.events.OnShouldRedraw;
@@ -39,7 +39,9 @@ import cz.dusanjencik.watchfaceconfigurator.core.events.OnUpdateSettings;
 import cz.dusanjencik.watchfaceconfigurator.core.utils.DebugLog;
 import cz.dusanjencik.watchfaceconfigurator.core.utils.PrefUtils;
 import cz.dusanjencik.watchfaceconfigurator.core.watches.WordsWatchFace;
-import cz.dusanjencik.watchfaceconfigurator.events.OnColorClickEvent;
+import cz.dusanjencik.watchfaceconfigurator.events.OnColorItemEvent;
+import cz.dusanjencik.watchfaceconfigurator.events.OnLangItemEvent;
+import cz.dusanjencik.watchfaceconfigurator.models.LangItem;
 import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,9 +55,8 @@ public class MainActivity extends AppCompatActivity {
 	@Bind (R.id.text_recycler_view)       RecyclerView mTextRecyclerView;
 	@Bind (R.id.accent_recycler_view)     RecyclerView mAccentRecyclerView;
 	@Bind (R.id.shadow_recycler_view)     RecyclerView mShadowRecyclerView;
+	@Bind (R.id.lang_recycler_view)       RecyclerView mLangRecyclerView;
 	@Bind (R.id.reveal_view)              View         mRevealView;
-	@Bind (R.id.btnLangCS)                Button       mBtnLangCS;
-	@Bind (R.id.btnLangEN)                Button       mBtnLangEN;
 
 	private WordsWatchFace mWatchface;
 	private Calendar       mCalendar;
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 	private boolean        mIsRevealInAnim;
 	private int            mRefreshDelay;
 	private int            touchX, touchY;
-	private Vibrator 	   mVibrator;
+	private Vibrator mVibrator;
 
 	private Paint mBackgroundPaint, mWatchFramePaint, mWatchBeltPaint;
 
@@ -112,7 +113,14 @@ public class MainActivity extends AppCompatActivity {
 				Configuration.SHADOW_COLOR, shadowColor);
 		initRecyclerView(mShadowRecyclerView, shadowAdapter);
 
+		@Configuration.LangType
 		final int lang = PrefUtils.getLang();
+		mWatchface.updateLang(lang);
+		LangItem[] langItems = new LangItem[] {
+				new LangItem(getString(R.string.lang_czech), Configuration.LANG_CZECH),
+				new LangItem(getString(R.string.lang_english), Configuration.LANG_ENGLISH)};
+		LangAdapter langAdapter = new LangAdapter(this, new Pair<>(langItems, lang), Configuration.LANG);
+		initRecyclerView(mLangRecyclerView, langAdapter);
 
 		mDataLayer = new DataLayer(this) {
 			@Override
@@ -136,21 +144,6 @@ public class MainActivity extends AppCompatActivity {
 		touchX = (int) event.getX();
 		touchY = (int) event.getY();
 		return false;
-	}
-
-	@OnClick ( {R.id.btnLangCS, R.id.btnLangEN})
-	public void onLanguageClick(View v) {
-		@Configuration.LangType int lang;
-		if (v.getId() == R.id.btnLangCS) {
-			lang = Configuration.LANG_CZECH;
-		} else {
-			lang = Configuration.LANG_ENGLISH;
-		}
-		if (mWatchface.getLang() == lang) return;
-//		mWatchface.updateLang(lang);
-		mDataLayer.postToWearable(Configuration.LANG, lang);
-//		mWatchface.generateDistributionInNextDraw();
-		redraw();
 	}
 
 	@OnTouch (R.id.watch_surface)
@@ -221,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
 		mWatchBeltPaint.setAntiAlias(true);
 	}
 
-	private void initRecyclerView(RecyclerView recyclerView, ColorAdapter adapter) {
+	private void initRecyclerView(RecyclerView recyclerView, ABaseAdapter adapter) {
 		recyclerView.setHasFixedSize(true);
 		LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 		layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -266,9 +259,14 @@ public class MainActivity extends AppCompatActivity {
 		}
 	}
 
-	public void onEvent(OnColorClickEvent event) {
+	public void onEvent(OnColorItemEvent event) {
 		startRevealAnim(event.item.color);
 		mDataLayer.postToWearable(event.type, event.item.color);
+	}
+
+	public void onEvent(OnLangItemEvent event) {
+		if (mWatchface.getLang() == event.item.lang) return;
+		mDataLayer.postToWearable(Configuration.LANG, event.item.lang);
 	}
 
 	public void onEvent(OnUpdateSettings event) {
