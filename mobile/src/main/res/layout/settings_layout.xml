@@ -59,4 +59,15 @@
 		android:layout_height="@dimen/color_line_height"
 		android:visibility="visible"/>
 
+	<TextView
+		style="@style/SettingsHeader"
+		android:layout_marginTop="@dimen/margin_header_top"
+		android:text="@string/shape"/>
+
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/shape_recycler_view"
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/color_line_height"
+		android:visibility="visible"/>
+
 </LinearLayout>

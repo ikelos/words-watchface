@@ -107,4 +107,12 @@ public class PrefUtils {
 	public static int getLang() {
 		return getPrefs().getInt(Configuration.KEY_LANG, Configuration.DEFAULT_LANG);
 	}
+
+	public static void setShape(@Configuration.ShapeType int shape) {
+		saveImmediatelySync(Configuration.KEY_SHAPE, shape);
+	}
+
+	public static int getShape() {
+		return getPrefs().getInt(Configuration.KEY_SHAPE, Configuration.DEFAULT_SHAPE);
+	}
 }

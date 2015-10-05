@@ -16,4 +16,9 @@ public class ColorViewHolder extends ABaseViewHolder {
 	public ColorViewHolder(View v) {
 		super(v);
 	}
+
+	@Override
+	public View getClickableView() {
+		return button;
+	}
 }

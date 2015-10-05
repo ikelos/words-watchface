@@ -32,6 +32,7 @@ import butterknife.OnTouch;
 import cz.dusanjencik.watchfaceconfigurator.adapters.ABaseAdapter;
 import cz.dusanjencik.watchfaceconfigurator.adapters.ColorAdapter;
 import cz.dusanjencik.watchfaceconfigurator.adapters.LangAdapter;
+import cz.dusanjencik.watchfaceconfigurator.adapters.ShapeAdapter;
 import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
 import cz.dusanjencik.watchfaceconfigurator.core.data.DataLayer;
 import cz.dusanjencik.watchfaceconfigurator.core.events.OnShouldRedraw;
@@ -41,7 +42,9 @@ import cz.dusanjencik.watchfaceconfigurator.core.utils.PrefUtils;
 import cz.dusanjencik.watchfaceconfigurator.core.watches.WordsWatchFace;
 import cz.dusanjencik.watchfaceconfigurator.events.OnColorItemEvent;
 import cz.dusanjencik.watchfaceconfigurator.events.OnLangItemEvent;
+import cz.dusanjencik.watchfaceconfigurator.events.OnShapeItemEvent;
 import cz.dusanjencik.watchfaceconfigurator.models.LangItem;
+import cz.dusanjencik.watchfaceconfigurator.models.ShapeItem;
 import de.greenrobot.event.EventBus;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 	@Bind (R.id.accent_recycler_view)     RecyclerView mAccentRecyclerView;
 	@Bind (R.id.shadow_recycler_view)     RecyclerView mShadowRecyclerView;
 	@Bind (R.id.lang_recycler_view)       RecyclerView mLangRecyclerView;
+	@Bind (R.id.shape_recycler_view)      RecyclerView mShapeRecyclerView;
 	@Bind (R.id.reveal_view)              View         mRevealView;
 
 	private WordsWatchFace mWatchface;
@@ -117,21 +121,31 @@ public class MainActivity extends AppCompatActivity {
 		final int lang = PrefUtils.getLang();
 		mWatchface.updateLang(lang);
 		LangItem[] langItems = new LangItem[] {
-				new LangItem(getString(R.string.lang_czech), Configuration.LANG_CZECH),
-				new LangItem(getString(R.string.lang_english), Configuration.LANG_ENGLISH)};
+				new LangItem(getString(R.string.lang_english), Configuration.LANG_ENGLISH),
+				new LangItem(getString(R.string.lang_czech), Configuration.LANG_CZECH)};
 		LangAdapter langAdapter = new LangAdapter(this, new Pair<>(langItems, lang), Configuration.LANG);
 		initRecyclerView(mLangRecyclerView, langAdapter);
+
+		@Configuration.ShapeType
+		final int shape = PrefUtils.getShape();
+		mWatchface.updateShape(shape);
+		ShapeItem[] shapeItems = new ShapeItem[] {
+				new ShapeItem(getString(R.string.round), Configuration.SHAPE_ROUND),
+				new ShapeItem(getString(R.string.square), Configuration.SHAPE_SQUARE)};
+		ShapeAdapter shapeAdapter = new ShapeAdapter(this, new Pair<>(shapeItems, shape), Configuration.SHAPE);
+		initRecyclerView(mShapeRecyclerView, shapeAdapter);
 
 		mDataLayer = new DataLayer(this) {
 			@Override
 			public void onConnected(Bundle bundle) {
 				super.onConnected(bundle);
-				// Sync values in watch with phone.
+				// Sync values from with phone to watch.
 				mDataLayer.postToWearable(Configuration.BACKGROUND_COLOR, backgroundColor);
 				mDataLayer.postToWearable(Configuration.TEXT_COLOR, textColor);
 				mDataLayer.postToWearable(Configuration.ACCENT_COLOR, accentColor);
 				mDataLayer.postToWearable(Configuration.SHADOW_COLOR, shadowColor);
 				mDataLayer.postToWearable(Configuration.LANG, lang);
+				mDataLayer.postToWearable(Configuration.SHAPE, shape);
 			}
 		};
 		mPeriodicHandler = new Handler();
@@ -253,7 +267,13 @@ public class MainActivity extends AppCompatActivity {
 					width / 2f + mWatchfaceSizeX / 2f + mWatchfaceSizeX / 15f,
 					height / 2f - mWatchfaceSizeX / 30f + mWatchfaceSizeX / 15f, mWatchBeltPaint);
 			canvas.drawRect(width / 2f - mWatchfaceSizeX / 5f, 0, width / 2f + mWatchfaceSizeX / 5f, height, mWatchBeltPaint);
-			canvas.drawCircle(width / 2f, height / 2, mWatchfaceSizeX * 0.55f, mWatchFramePaint);
+			if (mWatchface.getShape() == Configuration.SHAPE_ROUND)
+				canvas.drawCircle(width / 2f, height / 2f, mWatchfaceSizeX * 0.55f, mWatchFramePaint);
+			else
+				canvas.drawRoundRect(width / 2f - mWatchfaceSizeX * 0.55f, height / 2f - mWatchfaceSizeX * 0.55f,
+						width / 2f + mWatchfaceSizeX * 0.55f, height / 2f + mWatchfaceSizeX * 0.55f,
+						mWatchfaceSizeX * 0.1f, mWatchfaceSizeX * 0.1f,
+						mWatchFramePaint);
 			mWatchface.onDraw(canvas, mWatchSize);
 			holder.unlockCanvasAndPost(canvas);
 		}
@@ -267,6 +287,11 @@ public class MainActivity extends AppCompatActivity {
 	public void onEvent(OnLangItemEvent event) {
 		if (mWatchface.getLang() == event.item.lang) return;
 		mDataLayer.postToWearable(Configuration.LANG, event.item.lang);
+	}
+
+	public void onEvent(OnShapeItemEvent event) {
+		if (mWatchface.getShape() == event.item.shape) return;
+		mDataLayer.postToWearable(Configuration.SHAPE, event.item.shape);
 	}
 
 	public void onEvent(OnUpdateSettings event) {

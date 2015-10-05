@@ -94,6 +94,12 @@ public class DataLayer implements GoogleApiClient.ConnectionCallbacks,
 			case Configuration.LANG: {
 				PrefUtils.setLang(data);
 				putDataMapReq.getDataMap().putInt(Configuration.KEY_LANG, data);
+				break;
+			}
+			case Configuration.SHAPE: {
+				PrefUtils.setShape(data);
+				putDataMapReq.getDataMap().putInt(Configuration.KEY_SHAPE, data);
+				break;
 			}
 		}
 		PutDataRequest putDataReq = putDataMapReq.asPutDataRequest();

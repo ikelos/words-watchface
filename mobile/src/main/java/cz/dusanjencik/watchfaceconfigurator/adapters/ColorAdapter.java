@@ -4,10 +4,9 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.annotation.ArrayRes;
 import android.view.View;
-import android.view.ViewGroup;
 
-import cz.dusanjencik.watchfaceconfigurator.R;
 import cz.dusanjencik.watchfaceconfigurator.adapters.view_holders.ColorViewHolder;
+import cz.dusanjencik.watchfaceconfigurator.adapters.view_holders.TextViewHolder;
 import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
 import cz.dusanjencik.watchfaceconfigurator.events.OnColorItemEvent;
 import cz.dusanjencik.watchfaceconfigurator.models.ColorItem;
@@ -25,20 +24,13 @@ public class ColorAdapter extends ABaseAdapter<ColorViewHolder, ColorItem> {
 	}
 
 	@Override
-	protected void onRedraw(ColorViewHolder holder, ColorItem item, final int layoutPosition) {
-		holder.selectedView.setBackgroundColor(item.color);
-		holder.button.setSupportBackgroundTintList(new ColorStateList(new int[][] {new int[0]}, new int[] {item.color}));
-		holder.button.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				ColorAdapter.super.onClick(layoutPosition);
-			}
-		});
+	protected ColorViewHolder onCreateInstanceViewHolder(View view) {
+		return new ColorViewHolder(view);
 	}
 
 	@Override
-	public ColorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View v = mLayoutInflater.inflate(R.layout.button_view, parent, false);
-		return new ColorViewHolder(v);
+	protected void onRedraw(ColorViewHolder holder, ColorItem item, final int layoutPosition) {
+		holder.selectedView.setBackgroundColor(item.color);
+		holder.button.setSupportBackgroundTintList(new ColorStateList(new int[][] {new int[0]}, new int[] {item.color}));
 	}
 }

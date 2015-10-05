@@ -10,4 +10,7 @@
 	<string name="snackbar_ambient">"Ambient mode is "</string>
 	<string name="ambient_on">on</string>
 	<string name="ambient_off">off</string>
+	<string name="shape">shape</string>
+	<string name="round">round</string>
+	<string name="square">square</string>
 </resources>

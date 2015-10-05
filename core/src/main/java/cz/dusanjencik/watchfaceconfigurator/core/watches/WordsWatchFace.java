@@ -29,13 +29,16 @@ public class WordsWatchFace extends ABaseWatchface {
 	private static final Typeface NORMAL_TYPEFACE     =
 			Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
 	public static final  int      NEW_GENERATION_TIME = 60; // in sec
+	private static final int[]    NUM_CHARS_ROUND     = new int[] {
+			9, 11, 12, 13, 14, 14, 14, 14, 13, 12, 10
+	};
+	private static final int[]    NUM_CHARS_SQUARE    = new int[] {
+			14, 14, 14, 14, 14, 14, 14, 14, 14, 14, 14
+	};
 
 	private Paint mBackgroundPaint;
 	private Paint mTextPaint, mTextShadowPaint, mTextAccentPaint;
-	private float mTextSize;
-	private final int[] mNumOfChars = new int[] {
-			9, 11, 12, 13, 14, 14, 14, 14, 13, 12, 10
-	};
+	private float          mTextSize;
 	private TextRow[]      mTextRows;
 	private AccentString[] mActualText;
 	private boolean mShowFromTop = true;
@@ -44,6 +47,8 @@ public class WordsWatchFace extends ABaseWatchface {
 	private boolean mIsInitializedSize = false;
 	@Configuration.LangType
 	private int mLang;
+	@Configuration.ShapeType
+	private int mShape;
 
 	@SuppressWarnings ("ResourceType")
 	public WordsWatchFace(Context context, Calendar calendar, boolean isPeekCardShown) {
@@ -57,6 +62,7 @@ public class WordsWatchFace extends ABaseWatchface {
 		mTextShadowPaint = createTextPaint(PrefUtils.getShadowColor());
 		mTextAccentPaint = createTextPaint(PrefUtils.getAccentColor());
 		mLang = PrefUtils.getLang();
+		mShape = PrefUtils.getShape();
 
 		mRandom = new Random(System.currentTimeMillis());
 		mShowFromTop = isPeekCardShown;
@@ -66,6 +72,11 @@ public class WordsWatchFace extends ABaseWatchface {
 	@Configuration.LangType
 	public int getLang() {
 		return mLang;
+	}
+
+	@Configuration.ShapeType
+	public int getShape() {
+		return mShape;
 	}
 
 	public boolean isInitializedSize() {
@@ -108,6 +119,7 @@ public class WordsWatchFace extends ABaseWatchface {
 
 	@SuppressWarnings ("ResourceType")
 	public void processConfigurationFor(DataItem item) {
+		boolean regenerate = false;
 		if (Configuration.PATH.equals(item.getUri().getPath())) {
 			DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
 			if (dataMap.containsKey(Configuration.KEY_BACKGROUND_COLOR)) {
@@ -124,9 +136,15 @@ public class WordsWatchFace extends ABaseWatchface {
 			}
 			if (dataMap.containsKey(Configuration.KEY_LANG)) {
 				updateLang(dataMap.getInt(Configuration.KEY_LANG, Configuration.DEFAULT_LANG));
-				generateDistributionInNextDraw();
+				regenerate = true;
+			}
+			if (dataMap.containsKey(Configuration.KEY_SHAPE)) {
+				updateShape(dataMap.getInt(Configuration.KEY_SHAPE, Configuration.DEFAULT_SHAPE));
+				regenerate = true;
 			}
 		}
+		if(regenerate)
+			generateDistributionInNextDraw();
 	}
 
 	public void updateBackgroundColourTo(int color) {
@@ -149,6 +167,14 @@ public class WordsWatchFace extends ABaseWatchface {
 		mLang = lang;
 	}
 
+	public void updateShape(@Configuration.ShapeType int shape) {
+		mShape = shape;
+	}
+
+	private int[] getActualNumOfChars() {
+		return mShape == Configuration.SHAPE_ROUND ? NUM_CHARS_ROUND : NUM_CHARS_SQUARE;
+	}
+
 	@Override
 	public void onDraw(Canvas canvas, Rect bounds) {
 		generateNewDistribution();
@@ -162,13 +188,18 @@ public class WordsWatchFace extends ABaseWatchface {
 		}
 
 		// Draw the background.
-		canvas.drawCircle(bounds.centerX(), bounds.centerY(), bounds.width() / 2f + 1, mBackgroundPaint);
+		if (mShape == Configuration.SHAPE_ROUND)
+			canvas.drawCircle(bounds.centerX(), bounds.centerY(), bounds.width() / 2f + 1, mBackgroundPaint);
+		else
+			canvas.drawRoundRect(bounds.left, bounds.top, bounds.right, bounds.bottom,
+					bounds.width() * 0.1f, bounds.width() * 0.1f, mBackgroundPaint);
 //		canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
 
 		float centerX = bounds.centerX(), centerY = bounds.centerY();
-		float offsetX = bounds.width() / 24f, offsetY = bounds.top + bounds.height() / 6f;//bounds.top + bounds.height() / 3f;
+		float offsetX = bounds.width() / 24f, offsetY = bounds.top + bounds.height() / 6f;
 
 		boolean showText = true;
+		int[] mNumOfChars = getActualNumOfChars();
 		for (int y = 0, textUsed = 0; y < mNumOfChars.length; y++) {
 			float offset = centerX - mNumOfChars[y] * mTextSize / 2f;
 			boolean wasTextUsed = false;
@@ -199,6 +230,7 @@ public class WordsWatchFace extends ABaseWatchface {
 			return false;
 		}
 		mLastUpdate = mTime.getTimeInMillis();
+		int[] mNumOfChars = getActualNumOfChars();
 		mTextRows = new TextRow[mNumOfChars.length];
 
 		mActualText = LangFactory.parseDate(mTime, mContext.getResources(), mLang);
