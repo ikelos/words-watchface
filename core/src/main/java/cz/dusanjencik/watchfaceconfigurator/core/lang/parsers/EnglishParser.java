@@ -70,6 +70,7 @@ public class EnglishParser extends ALangParser {
 	@Override
 	public void onHalf() {
 		mBuilder.add(R.string.en_half, true);
+		mBuilder.add(R.string.en_past);
 		addBasic(mHour - 1, true);
 	}
 

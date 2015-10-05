@@ -29,6 +29,7 @@ import android.os.Message;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
 
@@ -114,6 +115,8 @@ public class WatchfaceService extends CanvasWatchFaceService {
 			setWatchFaceStyle(new WatchFaceStyle.Builder(WatchfaceService.this)
 					.setCardPeekMode(WatchFaceStyle.PEEK_MODE_VARIABLE)
 					.setAmbientPeekMode(WatchFaceStyle.AMBIENT_PEEK_MODE_HIDDEN)
+					.setHotwordIndicatorGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL)
+					.setStatusBarGravity(Gravity.TOP)
 					.setBackgroundVisibility(WatchFaceStyle.BACKGROUND_VISIBILITY_INTERRUPTIVE)
 					.setShowSystemUiTime(false)
 					.build());
@@ -201,6 +204,7 @@ public class WatchfaceService extends CanvasWatchFaceService {
 			mXOffset = resources.getDimension(mIsRound
 					? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
 			mChinSize = insets.getSystemWindowInsetBottom();
+			mWatchFace.setIsCircle(mIsRound);
 		}
 
 		@Override

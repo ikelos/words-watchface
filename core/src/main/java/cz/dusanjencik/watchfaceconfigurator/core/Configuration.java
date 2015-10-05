@@ -59,7 +59,7 @@ public class Configuration {
 	public static final int DEFAULT_LANG             = parseDefaultLang();
 	public static final int DETAULT_BACKGROUND_COLOR = ContextCompat.getColor(App.getAppContext(), R.color.color11);
 	public static final int DEFAULT_TEXT_COLOR       = ContextCompat.getColor(App.getAppContext(), R.color.color0);
-	public static final int DETAULT_ACCENT_COLOR     = ContextCompat.getColor(App.getAppContext(), R.color.color3);
+	public static final int DETAULT_ACCENT_COLOR     = ContextCompat.getColor(App.getAppContext(), R.color.color2);
 	public static final int DETAULT_SHADOW_COLOR     = ContextCompat.getColor(App.getAppContext(), R.color.color12);
 	public static final int DEFAULT_SHAPE            = SHAPE_ROUND;
 

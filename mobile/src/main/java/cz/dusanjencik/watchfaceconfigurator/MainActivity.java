@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 		mVibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		mCalendar = new GregorianCalendar();
-		mWatchface = new WordsWatchFace(this, mCalendar, false);
+		mWatchface = new WordsWatchFace(this, mCalendar, false, true);
 
 		final int backgroundColor = PrefUtils.getBackgroundColor();
 		mWatchface.updateBackgroundColourTo(backgroundColor);

@@ -11,6 +11,6 @@
 	<string name="ambient_on">zapnutý</string>
 	<string name="ambient_off">vypnutý</string>
 	<string name="shape">shape</string>
-	<string name="round">round</string>
-	<string name="square">square</string>
+	<string name="round">kulaté</string>
+	<string name="square">čtvercové</string>
 </resources>

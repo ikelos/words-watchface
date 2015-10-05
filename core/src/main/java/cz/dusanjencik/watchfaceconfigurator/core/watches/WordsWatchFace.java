@@ -49,6 +49,12 @@ public class WordsWatchFace extends ABaseWatchface {
 	private int mLang;
 	@Configuration.ShapeType
 	private int mShape;
+	private boolean mIsEmulator = false;
+
+	public WordsWatchFace(Context context, Calendar calendar, boolean isPeekCardShown, boolean isEmulator) {
+		this(context, calendar, isPeekCardShown);
+		mIsEmulator = isEmulator;
+	}
 
 	@SuppressWarnings ("ResourceType")
 	public WordsWatchFace(Context context, Calendar calendar, boolean isPeekCardShown) {
@@ -143,7 +149,7 @@ public class WordsWatchFace extends ABaseWatchface {
 				regenerate = true;
 			}
 		}
-		if(regenerate)
+		if (regenerate)
 			generateDistributionInNextDraw();
 	}
 
@@ -188,12 +194,15 @@ public class WordsWatchFace extends ABaseWatchface {
 		}
 
 		// Draw the background.
-		if (mShape == Configuration.SHAPE_ROUND)
-			canvas.drawCircle(bounds.centerX(), bounds.centerY(), bounds.width() / 2f + 1, mBackgroundPaint);
-		else
-			canvas.drawRoundRect(bounds.left, bounds.top, bounds.right, bounds.bottom,
-					bounds.width() * 0.1f, bounds.width() * 0.1f, mBackgroundPaint);
-//		canvas.drawRect(0, 0, bounds.width(), bounds.height(), mBackgroundPaint);
+		if (!mIsEmulator) {
+			canvas.drawRect(bounds.left, bounds.top, bounds.right, bounds.bottom, mBackgroundPaint);
+		} else {
+			if (mShape == Configuration.SHAPE_ROUND)
+				canvas.drawCircle(bounds.centerX(), bounds.centerY(), bounds.width() / 2f + 1, mBackgroundPaint);
+			else
+				canvas.drawRoundRect(bounds.left, bounds.top, bounds.right, bounds.bottom,
+						bounds.width() * 0.1f, bounds.width() * 0.1f, mBackgroundPaint);
+		}
 
 		float centerX = bounds.centerX(), centerY = bounds.centerY();
 		float offsetX = bounds.width() / 24f, offsetY = bounds.top + bounds.height() / 6f;

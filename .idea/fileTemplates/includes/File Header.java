@@ -1,4 +1,4 @@
 /**
- * @author Dušan Jenčík dusanjencik@gmail.com
+ * @author Dušan Jenčík dusan.jencik@etnetera.cz.
  * @created ${DATE}.
  */
