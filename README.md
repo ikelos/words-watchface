@@ -20,7 +20,7 @@ Tato aplikace je plně v angličtině i v češtině.
 ---
 ###### *English*
 
-This project is an example of an implemetation of a watch face for *Android wear* platform. There is a configuration application for Android phones, by which you can change colors or shape of watch face.
+This project is an example of an implementation of a watch face for *Android wear* platform. There is a configuration application for Android phones, by which you can change colors or shape of watch face.
 
 ## About
 
