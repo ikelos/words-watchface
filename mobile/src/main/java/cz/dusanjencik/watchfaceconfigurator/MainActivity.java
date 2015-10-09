@@ -2,9 +2,11 @@ package cz.dusanjencik.watchfaceconfigurator;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -28,6 +30,7 @@ import java.util.GregorianCalendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnTouch;
 import cz.dusanjencik.watchfaceconfigurator.adapters.ABaseAdapter;
 import cz.dusanjencik.watchfaceconfigurator.adapters.ColorAdapter;
@@ -93,32 +96,32 @@ public class MainActivity extends AppCompatActivity {
 		mCalendar = new GregorianCalendar();
 		mWatchface = new WordsWatchFace(this, mCalendar, false, true);
 
-		final int backgroundColor = PrefUtils.getBackgroundColor();
+		int backgroundColor = PrefUtils.getBackgroundColor();
 		mWatchface.updateBackgroundColourTo(backgroundColor);
 		ColorAdapter backgroundAdapter = new ColorAdapter(this, R.array.color_set_background,
 				Configuration.BACKGROUND_COLOR, backgroundColor);
 		initRecyclerView(mBackgroundRecyclerView, backgroundAdapter);
 
-		final int textColor = PrefUtils.getTextColor();
+		int textColor = PrefUtils.getTextColor();
 		mWatchface.updateTextColorTo(textColor);
 		ColorAdapter textAdapter = new ColorAdapter(this, R.array.color_set_accent_and_text,
 				Configuration.TEXT_COLOR, textColor);
 		initRecyclerView(mTextRecyclerView, textAdapter);
 
-		final int accentColor = PrefUtils.getAccentColor();
+		int accentColor = PrefUtils.getAccentColor();
 		mWatchface.updateAccentColorTo(accentColor);
 		ColorAdapter accentAdapter = new ColorAdapter(this, R.array.color_set_accent_and_text,
 				Configuration.ACCENT_COLOR, accentColor);
 		initRecyclerView(mAccentRecyclerView, accentAdapter);
 
-		final int shadowColor = PrefUtils.getShadowColor();
+		int shadowColor = PrefUtils.getShadowColor();
 		mWatchface.updateShadowColorTo(shadowColor);
 		ColorAdapter shadowAdapter = new ColorAdapter(this, R.array.color_set_shadow_text,
 				Configuration.SHADOW_COLOR, shadowColor);
 		initRecyclerView(mShadowRecyclerView, shadowAdapter);
 
 		@Configuration.LangType
-		final int lang = PrefUtils.getLang();
+		int lang = PrefUtils.getLang();
 		mWatchface.updateLang(lang);
 		LangItem[] langItems = new LangItem[] {
 				new LangItem(getString(R.string.lang_english), Configuration.LANG_ENGLISH),
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 		initRecyclerView(mLangRecyclerView, langAdapter);
 
 		@Configuration.ShapeType
-		final int shape = PrefUtils.getShape();
+		int shape = PrefUtils.getShape();
 		mWatchface.updateShape(shape);
 		ShapeItem[] shapeItems = new ShapeItem[] {
 				new ShapeItem(getString(R.string.round), Configuration.SHAPE_ROUND),
@@ -140,12 +143,12 @@ public class MainActivity extends AppCompatActivity {
 			public void onConnected(Bundle bundle) {
 				super.onConnected(bundle);
 				// Sync values from with phone to watch.
-				mDataLayer.postToWearable(Configuration.BACKGROUND_COLOR, backgroundColor);
-				mDataLayer.postToWearable(Configuration.TEXT_COLOR, textColor);
-				mDataLayer.postToWearable(Configuration.ACCENT_COLOR, accentColor);
-				mDataLayer.postToWearable(Configuration.SHADOW_COLOR, shadowColor);
-				mDataLayer.postToWearable(Configuration.LANG, lang);
-				mDataLayer.postToWearable(Configuration.SHAPE, shape);
+				mDataLayer.postToWearable(Configuration.BACKGROUND_COLOR, PrefUtils.getBackgroundColor());
+				mDataLayer.postToWearable(Configuration.TEXT_COLOR, PrefUtils.getTextColor());
+				mDataLayer.postToWearable(Configuration.ACCENT_COLOR, PrefUtils.getAccentColor());
+				mDataLayer.postToWearable(Configuration.SHADOW_COLOR, PrefUtils.getShadowColor());
+				mDataLayer.postToWearable(Configuration.LANG, PrefUtils.getLang());
+				mDataLayer.postToWearable(Configuration.SHAPE, PrefUtils.getShape());
 			}
 		};
 		mPeriodicHandler = new Handler();
@@ -171,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 				y > height / 2f - mWatchfaceSizeX / 5f &&
 				y < height / 2f - mWatchfaceSizeX / 5f + mWatchfaceSizeX / 2.5f &&
 				event.getAction() == MotionEvent.ACTION_DOWN) {
-			Snackbar.make(mWatchSurface, getString(R.string.snackbar_ambient) + (mWatchface.isAmbient() ? getString(R.string.ambient_on) : getString(R.string.ambient_off)), Snackbar.LENGTH_SHORT).show();
+			Snackbar.make(mWatchSurface, getString(R.string.snackbar_ambient) + (!mWatchface.isAmbient() ? getString(R.string.ambient_on) : getString(R.string.ambient_off)), Snackbar.LENGTH_SHORT).show();
 			mWatchface.onAmbientChanged(!mWatchface.isAmbient(), false);
 			mVibrator.vibrate(50);
 			tryDrawing(mWatchSurface.getHolder());
@@ -332,25 +335,21 @@ public class MainActivity extends AppCompatActivity {
 		tryDrawing(mWatchSurface.getHolder());
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_main, menu);
-		return true;
+	@OnClick(R.id.code_row)
+	public void onCodeRowClick() {
+		String url = getString(R.string.bitbucket_url);
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		i.setData(Uri.parse(url));
+		startActivity(i);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-
-		//noinspection SimplifiableIfStatement
-//		if (id == R.id.action_settings) {
-//			return true;
-		if (item.getItemId() == android.R.id.home) {
+		if (id == android.R.id.home) {
 			finish();
 			return true;
 		}
-
 		return super.onOptionsItemSelected(item);
 	}
 }

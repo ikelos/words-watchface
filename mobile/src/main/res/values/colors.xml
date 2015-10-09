@@ -4,13 +4,17 @@
     <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#FF4081</color>
 	<color name="background_color">#CFD8DC</color>
+	<color name="background_settings_color">#F6F7F8</color>
 
     <color name="preference_pressed">#55CCCCCC</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="text_grey">#8E9AA6</color>
 	<color name="layout_border">#1a1a1a</color>
+	<color name="layout_border_about">#DADDDF</color>
 	<color name="shadow">#D1000000</color>
 	<color name="belt_color">#1d1d1d</color>
 	<color name="watch_frame">#383838</color>
+    <color name="text_color_dark">#25282A</color>
+	<color name="text_color_light">#A8A9AA</color>
 </resources>

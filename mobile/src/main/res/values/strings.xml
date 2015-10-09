@@ -13,4 +13,12 @@
 	<string name="shape">shape</string>
 	<string name="round">round</string>
 	<string name="square">square</string>
+	<string name="About">About</string>
+	<string name="author">Author</string>
+	<string name="my_name">Dušan Jenčík</string>
+	<string name="aim_description">This application is example of watch face for Android wear and its configuration.</string>
+	<string name="aim">Aim</string>
+	<string name="source_codes">Source codes</string>
+	<string name="source_codes_description">All source codes are public.</string>
+	<string name="bitbucket_url">https://bitbucket.org/dusanjencik/words-watchface</string>
 </resources>

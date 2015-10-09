@@ -8,4 +8,5 @@
     <dimen name="watch_face_size">200dp</dimen>
 	<dimen name="color_view_size">48dp</dimen>
 	<dimen name="margin_header_top">16dp</dimen>
+    <dimen name="settings_about_row_height">52dp</dimen>
 </resources>

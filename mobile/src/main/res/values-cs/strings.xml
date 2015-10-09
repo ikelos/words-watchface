@@ -10,7 +10,13 @@
 	<string name="snackbar_ambient">"Ambient mode je "</string>
 	<string name="ambient_on">zapnutý</string>
 	<string name="ambient_off">vypnutý</string>
-	<string name="shape">shape</string>
+	<string name="shape">tvar</string>
 	<string name="round">kulaté</string>
 	<string name="square">čtvercové</string>
+	<string name="About">O aplikaci</string>
+	<string name="author">Autor</string>
+	<string name="aim_description">Tato aplikace souží jako ukázka implementace vlastního ciferníku pro Android wear a jeho nastavení.</string>
+	<string name="aim">Cíl</string>
+	<string name="source_codes">Zdrojové kódy</string>
+	<string name="source_codes_description">Všechny zdrojové kódy jsou veřejně dostupné.</string>
 </resources>
