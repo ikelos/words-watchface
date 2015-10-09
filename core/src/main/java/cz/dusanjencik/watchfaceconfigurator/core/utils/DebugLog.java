@@ -9,6 +9,8 @@ import java.lang.annotation.RetentionPolicy;
 import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
 
 /**
+ * Class for printing debug logs with depending on debug preferences.
+ *
  * @author Dušan Jenčík dusan.jencik@etnetera.cz.
  * @created 28.09.15.
  */

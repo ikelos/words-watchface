@@ -8,6 +8,8 @@ import butterknife.ButterKnife;
 import cz.dusanjencik.watchfaceconfigurator.R;
 
 /**
+ * Parent class for ViewHolders.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 04.10.15.
  */

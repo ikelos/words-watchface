@@ -5,6 +5,8 @@ import android.content.Context;
 import android.os.StrictMode;
 
 /**
+ * Main application class.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com.
  * @created 28.09.15.
  */

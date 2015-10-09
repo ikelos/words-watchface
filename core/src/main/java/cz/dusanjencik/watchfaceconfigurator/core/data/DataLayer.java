@@ -16,12 +16,14 @@ import com.google.android.gms.wearable.PutDataRequest;
 import com.google.android.gms.wearable.Wearable;
 
 import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
-import cz.dusanjencik.watchfaceconfigurator.core.events.OnShouldRedraw;
-import cz.dusanjencik.watchfaceconfigurator.core.events.OnUpdateSettings;
+import cz.dusanjencik.watchfaceconfigurator.core.events.OnShouldRedrawEvent;
+import cz.dusanjencik.watchfaceconfigurator.core.events.OnUpdateSettingsEvent;
 import cz.dusanjencik.watchfaceconfigurator.core.utils.PrefUtils;
 import de.greenrobot.event.EventBus;
 
 /**
+ * Class for communication between phone and wear device.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 28.09.15.
  */
@@ -59,14 +61,15 @@ public class DataLayer implements GoogleApiClient.ConnectionCallbacks,
 
 	@Override
 	public void onConnectionSuspended(int i) {
-
 	}
 
 	@Override
 	public void onConnectionFailed(ConnectionResult connectionResult) {
-
 	}
 
+	/**
+	 * Send bundle to wearable.
+	 */
 	public void postToWearable(@Configuration.SettingsType int tag, int data) {
 		PutDataMapRequest putDataMapReq = PutDataMapRequest.create(Configuration.PATH);
 
@@ -110,10 +113,10 @@ public class DataLayer implements GoogleApiClient.ConnectionCallbacks,
 		@Override
 		public void onResult(DataItemBuffer dataItems) {
 			for (DataItem item : dataItems) {
-				EventBus.getDefault().post(new OnUpdateSettings(item));
+				EventBus.getDefault().post(new OnUpdateSettingsEvent(item));
 			}
 			dataItems.release();
-			EventBus.getDefault().post(new OnShouldRedraw());
+			EventBus.getDefault().post(new OnShouldRedrawEvent());
 		}
 	};
 
@@ -122,11 +125,11 @@ public class DataLayer implements GoogleApiClient.ConnectionCallbacks,
 		public void onDataChanged(DataEventBuffer dataEvents) {
 			for (DataEvent event : dataEvents) {
 				if (event.getType() == DataEvent.TYPE_CHANGED) {
-					EventBus.getDefault().post(new OnUpdateSettings(event.getDataItem()));
+					EventBus.getDefault().post(new OnUpdateSettingsEvent(event.getDataItem()));
 				}
 			}
 			dataEvents.release();
-			EventBus.getDefault().post(new OnShouldRedraw());
+			EventBus.getDefault().post(new OnShouldRedrawEvent());
 		}
 	};
 }

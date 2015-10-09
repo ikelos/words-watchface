@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="app_name">Words Watchface konfigurátor</string>
 	<string name="background_color">Barva pozadí</string>
 	<string name="accent_color">Barva zvýraznění</string>
 	<string name="text_color">Barva textu</string>
@@ -7,7 +8,7 @@
 	<string name="language">Jazyk</string>
 	<string name="lang_czech">Česky</string>
 	<string name="lang_english">Anglicky</string>
-	<string name="snackbar_ambient">"Ambient mode je "</string>
+	<string name="snackbar_ambient">Ambient mód je </string>
 	<string name="ambient_on">zapnutý</string>
 	<string name="ambient_off">vypnutý</string>
 	<string name="shape">tvar</string>
@@ -19,4 +20,5 @@
 	<string name="aim">Cíl</string>
 	<string name="source_codes">Zdrojové kódy</string>
 	<string name="source_codes_description">Všechny zdrojové kódy jsou veřejně dostupné.</string>
+	<string name="version">Verze</string>
 </resources>

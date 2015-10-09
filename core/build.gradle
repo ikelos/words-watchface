@@ -5,10 +5,10 @@ android {
 	buildToolsVersion "23.0.0"
 
 	defaultConfig {
-		minSdkVersion 21
-		targetSdkVersion 23
-		versionCode 1
-		versionName "1.0"
+		minSdkVersion rootProject.ext.minSdkVersion
+		targetSdkVersion rootProject.ext.targetSdkVersion
+		versionCode rootProject.ext.versionCode
+		versionName rootProject.ext.versionName
 	}
 	signingConfigs {
 		release {
@@ -23,7 +23,7 @@ android {
 			resValue "bool", "show_debug_log", "true"
 		}
 		release {
-			resValue "bool", "show_debug_log", "true"
+			resValue "bool", "show_debug_log", "false"
 			minifyEnabled false
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 		}

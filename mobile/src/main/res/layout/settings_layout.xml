@@ -112,8 +112,43 @@
 					android:text="@string/my_name"
 					android:textColor="@color/text_color_light"
 					android:textSize="13sp"
-					android:visibility="visible"
-					tools:ignore="HardcodedText"/>
+					android:visibility="visible"/>
+			</LinearLayout>
+		</FrameLayout>
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginStart="16dp"
+			android:background="@color/layout_border_about"/>
+
+		<FrameLayout
+			android:id="@+id/version_row"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:clickable="true"
+			android:foreground="?android:attr/selectableItemBackground"
+			tools:ignore="UselessParent">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+
+				<TextView
+					style="@style/SettingsTextView"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="2dp"
+					android:text="@string/version"
+					android:textColor="@color/text_color_light"/>
+
+				<TextView
+					android:id="@+id/version"
+					style="@style/SettingsTextView"
+					android:layout_marginTop="2dp"
+					android:textColor="@color/text_color_light"
+					android:textSize="13sp"
+					android:visibility="visible"/>
 			</LinearLayout>
 		</FrameLayout>
 
@@ -149,8 +184,7 @@
 					android:text="@string/aim_description"
 					android:textColor="@color/text_color_light"
 					android:textSize="13sp"
-					android:visibility="visible"
-					tools:ignore="HardcodedText"/>
+					android:visibility="visible"/>
 			</LinearLayout>
 		</FrameLayout>
 
@@ -193,8 +227,7 @@
 						android:text="@string/source_codes_description"
 						android:textColor="@color/text_color_light"
 						android:textSize="13sp"
-						android:visibility="visible"
-						tools:ignore="HardcodedText"/>
+						android:visibility="visible"/>
 				</LinearLayout>
 
 				<ImageView

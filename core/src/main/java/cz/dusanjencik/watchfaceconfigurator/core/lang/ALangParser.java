@@ -6,6 +6,8 @@ import android.support.annotation.ArrayRes;
 import cz.dusanjencik.watchfaceconfigurator.core.model.AccentString;
 
 /**
+ * Parent class as language parser controller.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 03.10.15.
  */

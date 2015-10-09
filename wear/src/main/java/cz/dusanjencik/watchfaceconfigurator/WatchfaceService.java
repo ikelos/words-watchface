@@ -28,20 +28,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.wearable.DataApi;
-import com.google.android.gms.wearable.DataEvent;
-import com.google.android.gms.wearable.DataEventBuffer;
-import com.google.android.gms.wearable.DataItem;
-import com.google.android.gms.wearable.DataItemBuffer;
-import com.google.android.gms.wearable.Wearable;
 
 import java.lang.ref.WeakReference;
 import java.util.Calendar;
@@ -49,8 +38,8 @@ import java.util.GregorianCalendar;
 import java.util.concurrent.TimeUnit;
 
 import cz.dusanjencik.watchfaceconfigurator.core.data.DataLayer;
-import cz.dusanjencik.watchfaceconfigurator.core.events.OnShouldRedraw;
-import cz.dusanjencik.watchfaceconfigurator.core.events.OnUpdateSettings;
+import cz.dusanjencik.watchfaceconfigurator.core.events.OnShouldRedrawEvent;
+import cz.dusanjencik.watchfaceconfigurator.core.events.OnUpdateSettingsEvent;
 import cz.dusanjencik.watchfaceconfigurator.core.watches.WordsWatchFace;
 import de.greenrobot.event.EventBus;
 
@@ -161,11 +150,11 @@ public class WatchfaceService extends CanvasWatchFaceService {
 			mDataLayer.disconnect();
 		}
 
-		public void onEvent(OnUpdateSettings event) {
+		public void onEvent(OnUpdateSettingsEvent event) {
 			mWatchFace.processConfigurationFor(event.dataItem);
 		}
 
-		public void onEvent(OnShouldRedraw event) {
+		public void onEvent(OnShouldRedrawEvent event) {
 			invalidateIfNecessary();
 		}
 

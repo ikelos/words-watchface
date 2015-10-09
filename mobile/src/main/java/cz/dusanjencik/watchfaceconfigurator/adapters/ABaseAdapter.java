@@ -14,6 +14,8 @@ import cz.dusanjencik.watchfaceconfigurator.events.ABaseItemEvent;
 import de.greenrobot.event.EventBus;
 
 /**
+ * Template class for recyclerView adapter.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 04.10.15.
  */

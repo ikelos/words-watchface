@@ -5,11 +5,11 @@ android {
 	buildToolsVersion "23.0.0"
 
 	defaultConfig {
-		applicationId "cz.dusanjencik.watchfaceconfigurator"
-		minSdkVersion 21
-		targetSdkVersion 23
-		versionCode 1
-		versionName "1.0"
+		applicationId rootProject.ext.applicationId
+		minSdkVersion rootProject.ext.minSdkVersion
+		targetSdkVersion rootProject.ext.targetSdkVersion
+		versionCode rootProject.ext.versionCode
+		versionName rootProject.ext.versionName
 	}
 	signingConfigs {
 		release {
@@ -20,10 +20,22 @@ android {
 		}
 	}
 	buildTypes {
+		// Build option for developers
+		debug {
+			debuggable true
+		}
 		release {
-			minifyEnabled false
+			minifyEnabled true
 			signingConfig signingConfigs.release
 			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+
+	applicationVariants.all { variant ->
+		if (variant.buildType.name == 'release') {
+			resValue "string", "version_name", versionName + " (" + versionCode + ")"
+		} else { //debug
+			resValue "string", "version_name", versionName + "-dev (" + versionCode + ")"
 		}
 	}
 }

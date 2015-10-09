@@ -6,6 +6,8 @@ import cz.dusanjencik.core.R;
 import cz.dusanjencik.watchfaceconfigurator.core.lang.ALangParser;
 
 /**
+ * Class for parsing English language.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 03.10.15.
  */

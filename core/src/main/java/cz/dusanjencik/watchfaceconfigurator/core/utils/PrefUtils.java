@@ -10,14 +10,13 @@ import cz.dusanjencik.watchfaceconfigurator.core.App;
 import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
 
 /**
+ * Class for reading and writing preferences.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com.
  * @created 28.09.15.
  */
 public class PrefUtils {
 	public static final String TAG = PrefUtils.class.getSimpleName();
-
-	public static final int NONE_COLOR = -1;
-
 	private static WeakReference<SharedPreferences> sPrefs;
 
 	private static SharedPreferences getPrefs() {
@@ -70,7 +69,7 @@ public class PrefUtils {
 
 	public static int getBackgroundColor() {
 		return getPrefs().getInt(Configuration.KEY_BACKGROUND_COLOR,
-				Configuration.DETAULT_BACKGROUND_COLOR);
+				Configuration.DEFAULT_BACKGROUND_COLOR);
 	}
 
 	public static void setTextColor(int color) {
@@ -88,7 +87,7 @@ public class PrefUtils {
 
 	public static int getAccentColor() {
 		return getPrefs().getInt(Configuration.KEY_ACCENT_COLOR,
-				Configuration.DETAULT_ACCENT_COLOR);
+				Configuration.DEFAULT_ACCENT_COLOR);
 	}
 
 	public static void setShadowColor(int color) {
@@ -97,7 +96,7 @@ public class PrefUtils {
 
 	public static int getShadowColor() {
 		return getPrefs().getInt(Configuration.KEY_SHADOW_COLOR,
-				Configuration.DETAULT_SHADOW_COLOR);
+				Configuration.DEFAULT_SHADOW_COLOR);
 	}
 
 	public static void setLang(@Configuration.LangType int lang) {

@@ -21,6 +21,8 @@ import cz.dusanjencik.watchfaceconfigurator.core.model.TextRow;
 import cz.dusanjencik.watchfaceconfigurator.core.utils.PrefUtils;
 
 /**
+ * Words watch face implementation.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 26.09.15.
  */
@@ -129,16 +131,16 @@ public class WordsWatchFace extends ABaseWatchface {
 		if (Configuration.PATH.equals(item.getUri().getPath())) {
 			DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
 			if (dataMap.containsKey(Configuration.KEY_BACKGROUND_COLOR)) {
-				updateBackgroundColourTo(dataMap.getInt(Configuration.KEY_BACKGROUND_COLOR, Configuration.DETAULT_BACKGROUND_COLOR));
+				updateBackgroundColourTo(dataMap.getInt(Configuration.KEY_BACKGROUND_COLOR, Configuration.DEFAULT_BACKGROUND_COLOR));
 			}
 			if (dataMap.containsKey(Configuration.KEY_TEXT_COLOR)) {
 				updateTextColorTo(dataMap.getInt(Configuration.KEY_TEXT_COLOR, Configuration.DEFAULT_TEXT_COLOR));
 			}
 			if (dataMap.containsKey(Configuration.KEY_ACCENT_COLOR)) {
-				updateAccentColorTo(dataMap.getInt(Configuration.KEY_ACCENT_COLOR, Configuration.DETAULT_ACCENT_COLOR));
+				updateAccentColorTo(dataMap.getInt(Configuration.KEY_ACCENT_COLOR, Configuration.DEFAULT_ACCENT_COLOR));
 			}
 			if (dataMap.containsKey(Configuration.KEY_SHADOW_COLOR)) {
-				updateShadowColorTo(dataMap.getInt(Configuration.KEY_SHADOW_COLOR, Configuration.DETAULT_SHADOW_COLOR));
+				updateShadowColorTo(dataMap.getInt(Configuration.KEY_SHADOW_COLOR, Configuration.DEFAULT_SHADOW_COLOR));
 			}
 			if (dataMap.containsKey(Configuration.KEY_LANG)) {
 				updateLang(dataMap.getInt(Configuration.KEY_LANG, Configuration.DEFAULT_LANG));
@@ -204,7 +206,7 @@ public class WordsWatchFace extends ABaseWatchface {
 						bounds.width() * 0.1f, bounds.width() * 0.1f, mBackgroundPaint);
 		}
 
-		float centerX = bounds.centerX(), centerY = bounds.centerY();
+		float centerX = bounds.centerX();
 		float offsetX = bounds.width() / 24f, offsetY = bounds.top + bounds.height() / 6f;
 
 		boolean showText = true;

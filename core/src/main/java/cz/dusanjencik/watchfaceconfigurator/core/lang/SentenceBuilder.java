@@ -5,15 +5,16 @@ import android.support.annotation.StringRes;
 
 import java.util.ArrayList;
 
-import cz.dusanjencik.core.R;
 import cz.dusanjencik.watchfaceconfigurator.core.model.AccentString;
 
 /**
+ * Class for creating list of accented strings.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 26.09.15.
  */
 public class SentenceBuilder {
-	public static final  String TAG   = SentenceBuilder.class.getSimpleName();
+	public static final String TAG = SentenceBuilder.class.getSimpleName();
 
 	private ArrayList<AccentString> mFinalSentence;
 	private Resources               mRes;

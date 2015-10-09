@@ -17,13 +17,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Pair;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.widget.TextView;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -38,8 +38,8 @@ import cz.dusanjencik.watchfaceconfigurator.adapters.LangAdapter;
 import cz.dusanjencik.watchfaceconfigurator.adapters.ShapeAdapter;
 import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
 import cz.dusanjencik.watchfaceconfigurator.core.data.DataLayer;
-import cz.dusanjencik.watchfaceconfigurator.core.events.OnShouldRedraw;
-import cz.dusanjencik.watchfaceconfigurator.core.events.OnUpdateSettings;
+import cz.dusanjencik.watchfaceconfigurator.core.events.OnShouldRedrawEvent;
+import cz.dusanjencik.watchfaceconfigurator.core.events.OnUpdateSettingsEvent;
 import cz.dusanjencik.watchfaceconfigurator.core.utils.DebugLog;
 import cz.dusanjencik.watchfaceconfigurator.core.utils.PrefUtils;
 import cz.dusanjencik.watchfaceconfigurator.core.watches.WordsWatchFace;
@@ -50,6 +50,12 @@ import cz.dusanjencik.watchfaceconfigurator.models.LangItem;
 import cz.dusanjencik.watchfaceconfigurator.models.ShapeItem;
 import de.greenrobot.event.EventBus;
 
+/**
+ * Configuration screen.
+ *
+ * @author Dušan Jenčík dusanjencik@gmail.com
+ * @created 04.10.15.
+ */
 public class MainActivity extends AppCompatActivity {
 
 	public static final String TAG = MainActivity.class.getSimpleName();
@@ -64,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 	@Bind (R.id.lang_recycler_view)       RecyclerView mLangRecyclerView;
 	@Bind (R.id.shape_recycler_view)      RecyclerView mShapeRecyclerView;
 	@Bind (R.id.reveal_view)              View         mRevealView;
+	@Bind (R.id.version)                  TextView     mVersion;
 
 	private WordsWatchFace mWatchface;
 	private Calendar       mCalendar;
@@ -88,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
 		if (getSupportActionBar() != null)
 			getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+		mVersion.setText(R.string.version_name);
 		initPaints();
 
 		mWatchfaceSizeX = getResources().getDimensionPixelSize(R.dimen.watch_face_size);
@@ -204,12 +212,12 @@ public class MainActivity extends AppCompatActivity {
 
 			@Override
 			public void onAnimationCancel(Animator animation) {
-
+				mIsRevealInAnim = false;
+				mRevealView.setAlpha(0);
 			}
 
 			@Override
 			public void onAnimationRepeat(Animator animation) {
-
 			}
 		});
 		anim.start();
@@ -297,11 +305,11 @@ public class MainActivity extends AppCompatActivity {
 		mDataLayer.postToWearable(Configuration.SHAPE, event.item.shape);
 	}
 
-	public void onEvent(OnUpdateSettings event) {
+	public void onEvent(OnUpdateSettingsEvent event) {
 		mWatchface.processConfigurationFor(event.dataItem);
 	}
 
-	public void onEvent(OnShouldRedraw event) {
+	public void onEvent(OnShouldRedrawEvent event) {
 		// redraw immediately after setting up
 		tryDrawing(mWatchSurface.getHolder());
 	}
@@ -335,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
 		tryDrawing(mWatchSurface.getHolder());
 	}
 
-	@OnClick(R.id.code_row)
+	@OnClick (R.id.code_row)
 	public void onCodeRowClick() {
 		String url = getString(R.string.bitbucket_url);
 		Intent i = new Intent(Intent.ACTION_VIEW);

@@ -1,5 +1,6 @@
 package cz.dusanjencik.watchfaceconfigurator.core;
 
+import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
 import android.support.v4.content.ContextCompat;
 
@@ -10,6 +11,8 @@ import java.util.Locale;
 import cz.dusanjencik.core.R;
 
 /**
+ * Configuration file.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com.
  * @created 26.09.15.
  */
@@ -55,13 +58,12 @@ public class Configuration {
 	public static final int SHAPE_ROUND  = 0;
 	public static final int SHAPE_SQUARE = 1;
 
-	@LangType
-	public static final int DEFAULT_LANG             = parseDefaultLang();
-	public static final int DETAULT_BACKGROUND_COLOR = ContextCompat.getColor(App.getAppContext(), R.color.color11);
-	public static final int DEFAULT_TEXT_COLOR       = ContextCompat.getColor(App.getAppContext(), R.color.color0);
-	public static final int DETAULT_ACCENT_COLOR     = ContextCompat.getColor(App.getAppContext(), R.color.color2);
-	public static final int DETAULT_SHADOW_COLOR     = ContextCompat.getColor(App.getAppContext(), R.color.color12);
-	public static final int DEFAULT_SHAPE            = SHAPE_ROUND;
+	@LangType public static final  int DEFAULT_LANG             = parseDefaultLang();
+	@ColorInt public static final  int DEFAULT_BACKGROUND_COLOR = ContextCompat.getColor(App.getAppContext(), R.color.color11);
+	@ColorInt public static final  int DEFAULT_TEXT_COLOR       = ContextCompat.getColor(App.getAppContext(), R.color.color0);
+	@ColorInt public static final  int DEFAULT_ACCENT_COLOR     = ContextCompat.getColor(App.getAppContext(), R.color.color2);
+	@ColorInt public static final  int DEFAULT_SHADOW_COLOR     = ContextCompat.getColor(App.getAppContext(), R.color.color12);
+	@ShapeType public static final int DEFAULT_SHAPE            = SHAPE_ROUND;
 
 	@LangType
 	private static int parseDefaultLang() {

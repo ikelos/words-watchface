@@ -11,7 +11,7 @@
 	<application
 		android:name=".core.App"
 		android:allowBackup="false"
-		android:icon="@mipmap/ic_launcher"
+		android:icon="@drawable/icon_wear"
 		android:label="@string/app_name"
 		android:theme="@android:style/Theme.DeviceDefault">
 		<service
@@ -23,10 +23,10 @@
 				android:resource="@xml/watch_face"/>
 			<meta-data
 				android:name="com.google.android.wearable.watchface.preview"
-				android:resource="@drawable/screen"/>
+				android:resource="@drawable/icon_wear"/>
 			<meta-data
 				android:name="com.google.android.wearable.watchface.preview_circular"
-				android:resource="@drawable/screen"/>
+				android:resource="@drawable/icon_wear"/>
 
 			<!-- companion configuration activity -->
 			<meta-data

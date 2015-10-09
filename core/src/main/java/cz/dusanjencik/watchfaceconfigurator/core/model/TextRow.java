@@ -1,6 +1,8 @@
 package cz.dusanjencik.watchfaceconfigurator.core.model;
 
 /**
+ * Model class for positioning of text.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 20.09.15.
  */

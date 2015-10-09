@@ -6,10 +6,10 @@ import com.google.android.gms.wearable.DataItem;
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 28.09.15.
  */
-public class OnUpdateSettings implements IEvent {
+public class OnUpdateSettingsEvent implements IEvent {
 	public final DataItem dataItem;
 
-	public OnUpdateSettings(DataItem dataItem) {
+	public OnUpdateSettingsEvent(DataItem dataItem) {
 		this.dataItem = dataItem;
 	}
 }

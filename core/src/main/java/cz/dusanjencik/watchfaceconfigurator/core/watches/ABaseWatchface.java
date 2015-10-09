@@ -10,6 +10,8 @@ import cz.dusanjencik.watchfaceconfigurator.core.Configuration;
 import cz.dusanjencik.watchfaceconfigurator.core.utils.PrefUtils;
 
 /**
+ * Template class for watch face.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 26.09.15.
  */

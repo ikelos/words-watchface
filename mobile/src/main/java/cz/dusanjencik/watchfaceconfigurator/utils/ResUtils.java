@@ -8,10 +8,14 @@ import android.util.Pair;
 import cz.dusanjencik.watchfaceconfigurator.models.ColorItem;
 
 /**
- * @author Dušan Jenčík dusan.jencik@etnetera.cz.
+ * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 04.10.15.
  */
 public class ResUtils {
+
+	/**
+	 * Load colors from resources.
+	 */
 	public static Pair<ColorItem[], Integer> getArray(Context context, @ArrayRes int arrayRes, @ColorRes int selectedColor) {
 		int[] colors = context.getResources().getIntArray(arrayRes);
 		ColorItem[] items = new ColorItem[colors.length];

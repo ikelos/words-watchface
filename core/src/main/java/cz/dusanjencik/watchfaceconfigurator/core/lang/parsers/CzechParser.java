@@ -6,6 +6,8 @@ import cz.dusanjencik.core.R;
 import cz.dusanjencik.watchfaceconfigurator.core.lang.ALangParser;
 
 /**
+ * Class for parsing Czech language.
+ *
  * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 03.10.15.
  */
@@ -29,7 +31,7 @@ public class CzechParser extends ALangParser {
 	@Override
 	public void onFullOClock(int h) {
 		addBasic(h, true);
-		addHours(h+1, true);
+		addHours(h + 1, true);
 	}
 
 	@Override
