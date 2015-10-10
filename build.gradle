@@ -26,8 +26,8 @@ ext {
 	minSdkVersion = 21
 	targetSdkVersion = 23
 	applicationId = 'cz.dusanjencik.wordswatchface' // base package
-	versionCode = 1 // build version
-	versionName = "1.0.0.0-" + buildTime() // {milestone}.{common version}.{mobile version}.{wear version}-{build time}
+	versionCode = 2 // build version
+	versionName = "1.0.0.1-" + buildTime() // {milestone}.{common version}.{mobile version}.{wear version}-{build time}
 
 	def Properties props = new Properties()
 	def propFile = file('./signing.properties') // change to signing-example.properties with your signing options

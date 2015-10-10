@@ -131,23 +131,35 @@ public class WordsWatchFace extends ABaseWatchface {
 		if (Configuration.PATH.equals(item.getUri().getPath())) {
 			DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
 			if (dataMap.containsKey(Configuration.KEY_BACKGROUND_COLOR)) {
-				updateBackgroundColourTo(dataMap.getInt(Configuration.KEY_BACKGROUND_COLOR, Configuration.DEFAULT_BACKGROUND_COLOR));
+				int value = dataMap.getInt(Configuration.KEY_BACKGROUND_COLOR, Configuration.DEFAULT_BACKGROUND_COLOR);
+				PrefUtils.setBackgroundColor(value);
+				updateBackgroundColourTo(value);
 			}
 			if (dataMap.containsKey(Configuration.KEY_TEXT_COLOR)) {
-				updateTextColorTo(dataMap.getInt(Configuration.KEY_TEXT_COLOR, Configuration.DEFAULT_TEXT_COLOR));
+				int value = dataMap.getInt(Configuration.KEY_TEXT_COLOR, Configuration.DEFAULT_TEXT_COLOR);
+				PrefUtils.setTextColor(value);
+				updateTextColorTo(value);
 			}
 			if (dataMap.containsKey(Configuration.KEY_ACCENT_COLOR)) {
-				updateAccentColorTo(dataMap.getInt(Configuration.KEY_ACCENT_COLOR, Configuration.DEFAULT_ACCENT_COLOR));
+				int value = dataMap.getInt(Configuration.KEY_ACCENT_COLOR, Configuration.DEFAULT_ACCENT_COLOR);
+				PrefUtils.setAccentColor(value);
+				updateAccentColorTo(value);
 			}
 			if (dataMap.containsKey(Configuration.KEY_SHADOW_COLOR)) {
-				updateShadowColorTo(dataMap.getInt(Configuration.KEY_SHADOW_COLOR, Configuration.DEFAULT_SHADOW_COLOR));
+				int value = dataMap.getInt(Configuration.KEY_SHADOW_COLOR, Configuration.DEFAULT_SHADOW_COLOR);
+				PrefUtils.setShadowColor(value);
+				updateShadowColorTo(value);
 			}
 			if (dataMap.containsKey(Configuration.KEY_LANG)) {
-				updateLang(dataMap.getInt(Configuration.KEY_LANG, Configuration.DEFAULT_LANG));
+				int value = dataMap.getInt(Configuration.KEY_LANG, Configuration.DEFAULT_LANG);
+				PrefUtils.setLang(value);
+				updateLang(value);
 				regenerate = true;
 			}
 			if (dataMap.containsKey(Configuration.KEY_SHAPE)) {
-				updateShape(dataMap.getInt(Configuration.KEY_SHAPE, Configuration.DEFAULT_SHAPE));
+				int value = dataMap.getInt(Configuration.KEY_SHAPE, Configuration.DEFAULT_SHAPE);
+				PrefUtils.setShape(value);
+				updateShape(value);
 				regenerate = true;
 			}
 		}

@@ -3,7 +3,7 @@ package cz.dusanjencik.watchfaceconfigurator.core.model;
 /**
  * Model class for accented string. The accented string has special color.
  *
- * @author Dušan Jenčík dusan.jencik@etnetera.cz.
+ * @author Dušan Jenčík dusanjencik@gmail.com
  * @created 28.09.15.
  */
 public class AccentString {
