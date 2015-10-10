@@ -17,6 +17,8 @@ Pomocí konfigurační aplikace lze měnit barvu ciferníku a textu. Hodinky lze
 
 Tato aplikace je plně v angličtině i v češtině.
 
+Aplikace je ke stažení z [Google Play](https://play.google.com/store/apps/details?id=cz.dusanjencik.wordswatchface).
+
 ---
 ###### *English*
 
@@ -31,3 +33,5 @@ The watch face is made up by randomly generated letters and at randomly generate
 Using the configuration application you can change colors of the dial and text. This watch face can be used with booth square and round Android watch.
 
 This application is fully in English and Czech.
+
+Application can be downloaded from [Google Play](https://play.google.com/store/apps/details?id=cz.dusanjencik.wordswatchface).
