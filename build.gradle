@@ -40,6 +40,12 @@ ext {
 			keyAlias = props['KEY_ALIAS']
 			keyPassword = props['KEY_PASSWORD']
 		}
+		else {
+			throw new GradleException('The signing file does not contain all needed values.')
+		}
+	}
+	else {
+		throw new GradleException('The signing file cannot be read.')
 	}
 }
 
