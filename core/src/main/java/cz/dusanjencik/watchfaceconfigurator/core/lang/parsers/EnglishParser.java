@@ -81,7 +81,7 @@ public class EnglishParser extends ALangParser {
 
 	@Override
 	public void onTwentyToFull() {
-		addBasic(20, true);
+		addBasic(19, true);
 		mBuilder.add(R.string.en_to);
 		addBasic(mHour, true);
 	}
