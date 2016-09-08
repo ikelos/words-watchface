@@ -16,6 +16,24 @@
 		<item>deset</item>
 		<item>jedenáct</item>
 		<item>dvanáct</item>
+		<item>třináct</item>
+		<item>čtrnáct</item>
+		<item>patnáct</item>
+		<item>šestnáct</item>
+		<item>sedmnáct</item>
+		<item>osmnáct</item>
+		<item>devatenáct</item>
+		<item>dvacet</item>
+		<item>dvacet-jedna</item>
+		<item>dvacet-dvě</item>
+		<item>dvacet-tři</item>
+		<item>dvacet-čtyři</item>
+		<item>dvacet-pět</item>
+		<item>dvacet-šest</item>
+		<item>dvacet-sedm</item>
+		<item>dvacet-osm</item>
+		<item>dvacet-devět</item>
+		<item>třicet</item>
 	</string-array>
 	<string-array name="cs_ordinalNumbers">
 		<item>jedné</item>

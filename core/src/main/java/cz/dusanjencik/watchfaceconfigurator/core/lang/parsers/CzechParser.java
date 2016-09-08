@@ -36,7 +36,7 @@ public class CzechParser extends ALangParser {
 
 	@Override
 	public void onFivePast() {
-		addBasic(4);
+		addBasicMinutes(4);
 		mBuilder.add(R.string.cs_minute);
 		mBuilder.add(R.string.cs_after);
 		addOrdinal(mHour - 1, true);
@@ -45,7 +45,7 @@ public class CzechParser extends ALangParser {
 	@Override
 	public void onFiveToQuarter() {
 		mBuilder.add(R.string.cs_to1);
-		addBasic(4);
+		addBasicMinutes(4);
 		mBuilder.add(R.string.cs_minute);
 		mBuilder.add(R.string.cs_quarter1, true);
 		mBuilder.add(R.string.cs_to2);
@@ -62,7 +62,7 @@ public class CzechParser extends ALangParser {
 	@Override
 	public void onTenToHalf() {
 		mBuilder.add(R.string.cs_to1);
-		addBasic(9);
+		addBasicMinutes(9);
 		mBuilder.add(R.string.cs_half, true);
 		addOrdinal(mHour, true);
 	}
@@ -70,7 +70,7 @@ public class CzechParser extends ALangParser {
 	@Override
 	public void onFiveToHalf() {
 		mBuilder.add(R.string.cs_to1);
-		addBasic(4);
+		addBasicMinutes(4);
 		mBuilder.add(R.string.cs_half, true);
 		addOrdinal(mHour, true);
 	}
@@ -83,7 +83,7 @@ public class CzechParser extends ALangParser {
 
 	@Override
 	public void onFivePastHalf() {
-		addBasic(4);
+		addBasicMinutes(4);
 		mBuilder.add(R.string.cs_minute);
 		mBuilder.add(R.string.cs_after);
 		mBuilder.add(R.string.cs_half, true);
@@ -93,7 +93,7 @@ public class CzechParser extends ALangParser {
 	@Override
 	public void onTwentyToFull() {
 		mBuilder.add(R.string.cs_to1);
-		addBasic(4);
+		addBasicMinutes(4);
 		mBuilder.add(R.string.cs_minute);
 		mBuilder.add(R.string.cs_quarter2, true);
 		mBuilder.add(R.string.cs_to2);
@@ -110,7 +110,7 @@ public class CzechParser extends ALangParser {
 	@Override
 	public void onTenToFull() {
 		mBuilder.add(R.string.cs_to1);
-		addBasic(9);
+		addBasicMinutes(9);
 		mBuilder.add(R.string.cs_minute);
 		addBasic(mHour, true);
 	}
@@ -118,7 +118,7 @@ public class CzechParser extends ALangParser {
 	@Override
 	public void onFiveToFull() {
 		mBuilder.add(R.string.cs_to1);
-		addBasic(4);
+		addBasicMinutes(4);
 		mBuilder.add(R.string.cs_minute);
 		addBasic(mHour, true);
 	}
