@@ -69,7 +69,7 @@ public abstract class ALangParser {
 
 	protected void addBasic(int index, boolean isAccent) {
 		assert basicNumbers != null;
-		mBuilder.add(basicNumbers[repairHourIndex(index)], isAccent);
+		mBuilder.add(basicNumbers[index], isAccent);
 	}
 
 	protected void addBasic(int index) {
