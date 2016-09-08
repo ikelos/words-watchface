@@ -76,14 +76,14 @@ public class EnglishParser extends ALangParser {
 	public void onFivePastHalf() {
 		addBasic(24, true);
 		mBuilder.add(R.string.en_to);
-		addBasic(mHour - 1, true);
+		addBasic(mHour, true);
 	}
 
 	@Override
 	public void onTwentyToFull() {
 		addBasic(20, true);
 		mBuilder.add(R.string.en_to);
-		addBasic(mHour - 1, true);
+		addBasic(mHour, true);
 	}
 
 	@Override
