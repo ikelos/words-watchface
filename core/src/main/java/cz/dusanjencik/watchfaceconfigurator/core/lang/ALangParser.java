@@ -61,20 +61,31 @@ public abstract class ALangParser {
 		return mBuilder.build();
 	}
 
-	protected int repairHourIndex(int index) {
-		if (index >= 12) return index - 12;
-		if (index < 0) return index + 12;
+	protected int repairIndex(int index, int amount) {
+		if (index >= amount) return index - amount;
+		if (index < 0) return index + amount;
 		return index;
 	}
 
+	protected int repairHourIndex(int index) { return repairIndex(index, 12); }
+
+	protected int repairMinutesIndex(int index) { return repairIndex(index, 30); }
+
 	protected void addBasic(int index, boolean isAccent) {
 		assert basicNumbers != null;
-		mBuilder.add(basicNumbers[index], isAccent);
+		mBuilder.add(basicNumbers[repairHourIndex(index)], isAccent);
+	}
+
+	protected void addBasicMinutes(int index, boolean isAccent) {
+		assert basicNumbers != null;
+		mBuilder.add(basicNumbers[repairMinutesIndex(index)], isAccent);
 	}
 
 	protected void addBasic(int index) {
 		addBasic(index, false);
 	}
+
+	protected void addBasicMinutes(int index) { addBasic(index, false); }
 
 	protected void addOrdinal(int index, boolean isAccent) {
 		assert ordinalNumbers != null;

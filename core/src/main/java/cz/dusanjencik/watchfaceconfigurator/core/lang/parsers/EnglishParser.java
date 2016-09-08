@@ -32,14 +32,14 @@ public class EnglishParser extends ALangParser {
 
 	@Override
 	public void onFivePast() {
-		addBasic(4);
+		addBasicMinutes(4);
 		mBuilder.add(R.string.en_past);
 		addBasic(mHour - 1, true);
 	}
 
 	@Override
 	public void onFiveToQuarter() {
-		addBasic(9);
+		addBasicMinutes(9);
 		mBuilder.add(R.string.en_past);
 		addBasic(mHour - 1, true);
 	}
@@ -53,14 +53,14 @@ public class EnglishParser extends ALangParser {
 
 	@Override
 	public void onTenToHalf() {
-		addBasic(19, true);
+		addBasicMinutes(19, true);
 		mBuilder.add(R.string.en_past);
 		addBasic(mHour - 1, true);
 	}
 
 	@Override
 	public void onFiveToHalf() {
-		addBasic(24, true);
+		addBasicMinutes(24, true);
 		mBuilder.add(R.string.en_past);
 		addBasic(mHour - 1, true);
 	}
@@ -74,14 +74,14 @@ public class EnglishParser extends ALangParser {
 
 	@Override
 	public void onFivePastHalf() {
-		addBasic(24, true);
+		addBasicMinutes(24, true);
 		mBuilder.add(R.string.en_to);
 		addBasic(mHour, true);
 	}
 
 	@Override
 	public void onTwentyToFull() {
-		addBasic(19, true);
+		addBasicMinutes(19, true);
 		mBuilder.add(R.string.en_to);
 		addBasic(mHour, true);
 	}
@@ -95,14 +95,14 @@ public class EnglishParser extends ALangParser {
 
 	@Override
 	public void onTenToFull() {
-		addBasic(9);
+		addBasicMinutes(9);
 		mBuilder.add(R.string.en_to);
 		addBasic(mHour, true);
 	}
 
 	@Override
 	public void onFiveToFull() {
-		addBasic(4);
+		addBasicMinutes(4);
 		mBuilder.add(R.string.en_to);
 		addBasic(mHour, true);
 	}
